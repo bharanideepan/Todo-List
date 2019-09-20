@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="css/Todo.css"/>
+        <title>ToDo List</title>
+    </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <span>To-Do</span>
+                    <i class="material-icons">search</i>
+                    <input type="text" placeHolder="Search"/>
+                </div>
+                <div id="nav-bar" class="nav-left">
+                    <div class="nav-header">
+                        <button id="menu-btn" onmouseout="mouseOutField(this.id)" onmouseover="mouseOverField(this.id)" onClick="clickedField(this.id, this.value)" value="close"><i class="material-icons">menu</i></button>
+                    </div>
+                    <div class="nav-content">
+                        <ul>
+                            <div class="nav-item">
+                                <li>
+                                    <div class="item-icon">
+                                        <i class="material-icons">wb_sunny</i>
+                                    </div>
+                                    <div class="item-description">
+                                        <span>My Day</span>
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="nav-item">
+                                <li>
+                                    <div class="item-icon">
+                                        <i class="material-icons">star_border</i>
+                                    </div>
+                                    <div class="item-description">
+                                        <span>Important</span>
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="nav-item">
+                                <li>
+                                    <div class="item-icon">
+                                        <i class="material-icons">date_range</i>
+                                    </div>
+                                    <div class="item-description">
+                                        <span>Planned</span>
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="nav-item">
+                                <li>
+                                    <div class="item-icon">
+                                        <i class="material-icons">home</i>
+                                    </div>
+                                    <div class="item-description">
+                                        <span>Tasks</span>
+                                    </div>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </body>
+      <script src="js/Todo.js"></script>
+</html>
