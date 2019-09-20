@@ -13,53 +13,198 @@
                     <i class="material-icons">search</i>
                     <input type="text" placeHolder="Search"/>
                 </div>
-                <div id="nav-bar" class="nav-left">
-                    <div class="nav-header">
-                        <button id="menu-btn" onmouseout="mouseOutField(this.id)" onmouseover="mouseOverField(this.id)" onClick="clickedField(this.id, this.value)" value="close"><i class="material-icons">menu</i></button>
+                <div class="body">
+                    <div id="nav-bar" class="nav-left">
+                        <div class="nav-header">
+                            <button id="menu-btn" onmouseout="mouseOutField(this.id)" onmouseover="mouseOverField(this.id)" onClick="clickedField(this.id, this.value)" value="close"><i class="material-icons">menu</i></button>
+                        </div>
+                        <div class="nav-content">
+                            <ul>
+                                <div class="nav-item">
+                                    <li>
+                                        <div class="item-icon">
+                                            <i class="material-icons">wb_sunny</i>
+                                        </div>
+                                        <div class="item-description">
+                                            <span>My Day</span>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="nav-item">
+                                    <li>
+                                        <div class="item-icon">
+                                            <i class="material-icons">star_border</i>
+                                        </div>
+                                        <div class="item-description">
+                                            <span>Important</span>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="nav-item">
+                                    <li>
+                                        <div class="item-icon">
+                                            <i class="material-icons">date_range</i>
+                                        </div>
+                                        <div class="item-description">
+                                            <span>Planned</span>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="nav-item">
+                                    <li>
+                                        <div class="item-icon green">
+                                            <i class="material-icons">person_outline</i>
+                                        </div>
+                                        <div class="item-description">
+                                            <span>Assigned To Me</span>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="nav-item tasks">
+                                    <li>
+                                        <div class="item-icon">
+                                            <i class="material-icons">home</i>
+                                        </div>
+                                        <div class="item-description">
+                                            <span>Tasks</span>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="nav-item empty">
+                                </div>
+                                <div class="nav-item lists">
+                                  <!--  <li>
+                                        <div class="item-icon">
+                                            <i class="material-icons">list</i>
+                                        </div>
+                                        <div class="item-description">
+                                            <span></span>
+                                        </div>
+                                    </li>-->
+                                </div>
+                            </ul>
+                            <div class="add-list">
+                                <div class="add-list-icon">
+                                    <label id="addList-input" for="addList-input" onClick="clickedField(this.id, this.value)" value="close">
+                                        <i class="material-icons" aria-hidden="true">add</i>
+                                    </label>
+                                </div>
+                                <div class="add-list-input">
+                                    <input id="addList-input" type="text" maxlength="255" placeholder="New list">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nav-content">
-                        <ul>
-                            <div class="nav-item">
-                                <li>
-                                    <div class="item-icon">
-                                        <i class="material-icons">wb_sunny</i>
-                                    </div>
-                                    <div class="item-description">
-                                        <span>My Day</span>
-                                    </div>
-                                </li>
+                    <div class="center-column">
+                        <div class="center tool-bar">
+                            <span>Tasks</span>
+                            <button><i class="material-icons" aria-hidden="true">more_horiz</i></button>
+                        </div>
+                        <div class="center tasks-bar">
+                            <span><i class="material-icons" aria-hidden="true">radio_button_unchecked</i></span>
+                          <!--   <button></button>-->
+                        </div>
+                        <div class="center new-task">
+                            <div class="new-task-icon">
+                                <label for="newTask-input">
+                                    <i class="material-icons" aria-hidden="true">add</i>
+                                </label>
                             </div>
-                            <div class="nav-item">
-                                <li>
-                                    <div class="item-icon">
-                                        <i class="material-icons">star_border</i>
-                                    </div>
-                                    <div class="item-description">
-                                        <span>Important</span>
-                                    </div>
-                                </li>
+                            <div class="new-task-input">
+                                <input id="newTask-input" type="text" placeHolder="Add task"/>
                             </div>
-                            <div class="nav-item">
-                                <li>
-                                    <div class="item-icon">
-                                        <i class="material-icons">date_range</i>
-                                    </div>
-                                    <div class="item-description">
-                                        <span>Planned</span>
-                                    </div>
-                                </li>
+                        </div>
+                        <div class="center background-lines">
+                        </div>
+                        <div class="center background-lines">
+                        </div>
+                        <div class="center background-lines">
+                        </div>
+                        <div class="center background-lines">
+                        </div>
+                        <div class="center background-lines">
+                        </div>
+                        <div class="center background-lines">
+                        </div>
+                        <div class="center background-lines">
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <div class="right steps">
+                            <div class="inner tasks-bar">
+                                <span>
+                                    <i class="material-icons" aria-hidden="true">
+                                        radio_button_unchecked
+                                    </i>
+                                </span>
+                              <!--   <button></button>-->
                             </div>
-                            <div class="nav-item">
-                                <li>
-                                    <div class="item-icon">
-                                        <i class="material-icons">home</i>
-                                    </div>
-                                    <div class="item-description">
-                                        <span>Tasks</span>
-                                    </div>
-                                </li>
+                            <div class="inner new-task-right">
+                                <div class="new-task-icon">
+                                    <label for="newTask-input">
+                                        <i class="material-icons" aria-hidden="true">add</i>
+                                    </label>
+                                </div>
+                                <div class="new-task-input">
+                                    <input id="newTask-input" type="text" placeHolder="Add task"/>
+                                </div>
                             </div>
-                        </ul>
+                        </div>
+                        <div class="right my-day">
+                            <div class="inner">
+                                <span>
+                                    <i class="material-icons" aria-hidden="true">
+                                        wb_sunny
+                                    </i>
+                                </span>
+                                <span>Add to My Day</span>
+                            </div>
+                        </div>
+                        <div class="right options">
+                            <div class="inner">
+                                <span>
+                                    <i class="material-icons" aria-hidden="true">
+                                        access_alarm
+                                    </i>
+                                </span>
+                                <span>Remind me</span>
+                            </div>
+                            <div class="inner">
+                                <span>
+                                    <i class="material-icons" aria-hidden="true">
+                                        today
+                                    </i>
+                                </span>
+                                <span>Add due date</span>
+                            </div>
+                            <div class="inner">
+                                <span>
+                                    <i class="material-icons" aria-hidden="true">
+                                        repeat
+                                    </i>
+                                </span>
+                                <span>Repeat</span>
+                            </div>
+                        </div>
+                        <div class="right add-files">
+                            <div class="inner">
+                                <span>
+                                    <i class="material-icons" aria-hidden="true">
+                                        attach_file
+                                    </i>
+                                </span>
+                                <span>Add file</span>
+                            </div>
+                        </div>
+                        <div class="right notes">
+                            <div class="inner">
+                                <span>Add note</span>
+                            </div>
+                        </div>
+                        <div class="right footer">
+                            <div class="inner">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

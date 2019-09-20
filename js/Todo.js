@@ -6,6 +6,7 @@ function clickedField(id, value) {
         for (i = 0; i < itemDescriptions.length; i++) {
             itemDescriptions[i].style.display = "block";
         }
+        document.getElementsByClassName("add-list-input")[0].style.display = "block";
     } else {
         document.getElementById(id).value="close";
         document.getElementById("nav-bar").style.width="55px";
@@ -13,6 +14,7 @@ function clickedField(id, value) {
         for (i = 0; i < itemDescriptions.length; i++) {
             itemDescriptions[i].style.display = "none";
         }
+        document.getElementsByClassName("add-list-input")[0].style.display = "none";
     }
 }
 function mouseOverField(id) {
