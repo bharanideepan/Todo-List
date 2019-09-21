@@ -16,7 +16,7 @@
                 <div class="body">
                     <div id="nav-bar" class="nav-left">
                         <div class="nav-header">
-                            <button id="menu-btn" onmouseout="mouseOutField(this.id)" onmouseover="mouseOverField(this.id)" onClick="clickedField(this.id, this.value)" value="close"><i class="material-icons">menu</i></button>
+                            <button id="menu-btn" value="close"><i class="material-icons">menu</i></button>
                         </div>
                         <div class="nav-content">
                             <ul>
@@ -72,21 +72,21 @@
                                 </div>
                                 <div class="nav-item empty">
                                 </div>
-                                <div class="nav-item lists">
-                                  <!--  <li>
+                                <div id="listsMenu" class="nav-item lists">
+                                    <!--<li>
                                         <div class="item-icon">
                                             <i class="material-icons">list</i>
                                         </div>
                                         <div class="item-description">
-                                            <span></span>
+                                            <span>abc</span>
                                         </div>
                                     </li>-->
                                 </div>
                             </ul>
                             <div class="add-list">
                                 <div class="add-list-icon">
-                                    <label id="addList-input" for="addList-input" onClick="clickedField(this.id, this.value)" value="close">
-                                        <i class="material-icons" aria-hidden="true">add</i>
+                                    <label for="addList-input">
+                                        <i class="material-icons" >add</i>
                                     </label>
                                 </div>
                                 <div class="add-list-input">
@@ -97,63 +97,59 @@
                     </div>
                     <div class="center-column">
                         <div class="center tool-bar">
-                            <span>Tasks</span>
-                            <button><i class="material-icons" aria-hidden="true">more_horiz</i></button>
+                            <input id="list-title" value="Tasks" readonly>
+                            <!--<button><i class="material-icons" >more_horiz</i></button>-->
                         </div>
-                        <div class="center tasks-bar">
-                            <span><i class="material-icons" aria-hidden="true">radio_button_unchecked</i></span>
-                          <!--   <button></button>-->
+                        <div id="tasks" class="center">
+                            <!--<div class="task" id="idTask">
+                                <div class="task-icon">
+                                    <i class="material-icons">radio_button_unchecked</i>
+                                </div>
+                                <div class="task-input">
+                                    <input id="TasksInput" type="text" value="dzfhsgfhn"/>
+                                </div>
+                            </div>-->
                         </div>
                         <div class="center new-task">
-                            <div class="new-task-icon">
+                            <div class="task-icon">
                                 <label for="newTask-input">
-                                    <i class="material-icons" aria-hidden="true">add</i>
+                                    <i class="material-icons">add</i>
                                 </label>
                             </div>
-                            <div class="new-task-input">
+                            <div class="task-input">
                                 <input id="newTask-input" type="text" placeHolder="Add task"/>
                             </div>
                         </div>
-                        <div class="center background-lines">
-                        </div>
-                        <div class="center background-lines">
-                        </div>
-                        <div class="center background-lines">
-                        </div>
-                        <div class="center background-lines">
-                        </div>
-                        <div class="center background-lines">
-                        </div>
-                        <div class="center background-lines">
-                        </div>
-                        <div class="center background-lines">
-                        </div>
+                        <!--<div class="center background-lines">
+                        </div>-->
                     </div>
                     <div class="right-column">
                         <div class="right steps">
                             <div class="inner tasks-bar">
-                                <span>
-                                    <i class="material-icons" aria-hidden="true">
-                                        radio_button_unchecked
-                                    </i>
-                                </span>
-                              <!--   <button></button>-->
+                                <div>
+                                    <div class="task-icon">
+                                        <i class="material-icons">radio_button_unchecked</i>
+                                    </div>
+                                    <div class="task-input">
+                                        <input id="TasksInput" type="text"/>
+                                    </div>
+                                </div>
                             </div>
                             <div class="inner new-task-right">
-                                <div class="new-task-icon">
-                                    <label for="newTask-input">
-                                        <i class="material-icons" aria-hidden="true">add</i>
+                                <div class="task-icon">
+                                    <label for="newTaskInput">
+                                        <i class="material-icons" >add</i>
                                     </label>
                                 </div>
-                                <div class="new-task-input">
-                                    <input id="newTask-input" type="text" placeHolder="Add task"/>
+                                <div class="task-input">
+                                    <input id="newTaskInput" type="text" placeHolder="Add task"/>
                                 </div>
                             </div>
                         </div>
                         <div class="right my-day">
                             <div class="inner">
                                 <span>
-                                    <i class="material-icons" aria-hidden="true">
+                                    <i class="material-icons" >
                                         wb_sunny
                                     </i>
                                 </span>
@@ -163,7 +159,7 @@
                         <div class="right options">
                             <div class="inner">
                                 <span>
-                                    <i class="material-icons" aria-hidden="true">
+                                    <i class="material-icons" >
                                         access_alarm
                                     </i>
                                 </span>
@@ -171,7 +167,7 @@
                             </div>
                             <div class="inner">
                                 <span>
-                                    <i class="material-icons" aria-hidden="true">
+                                    <i class="material-icons" >
                                         today
                                     </i>
                                 </span>
@@ -179,7 +175,7 @@
                             </div>
                             <div class="inner">
                                 <span>
-                                    <i class="material-icons" aria-hidden="true">
+                                    <i class="material-icons" >
                                         repeat
                                     </i>
                                 </span>
@@ -189,7 +185,7 @@
                         <div class="right add-files">
                             <div class="inner">
                                 <span>
-                                    <i class="material-icons" aria-hidden="true">
+                                    <i class="material-icons" >
                                         attach_file
                                     </i>
                                 </span>
@@ -208,6 +204,6 @@
                     </div>
                 </div>
             </div>
-        </body>
       <script src="js/Todo.js"></script>
+        </body>
 </html>

@@ -71,8 +71,15 @@
 .material-icons{
     font-size:20px;
 }
-.tasks{
+.task {
+    display: flex;
     color: #117AD8;
+    padding-top: 25px;
+}
+.new-task {
+    display: flex;
+    color: #117AD8;
+    padding-top: 25px;
 }
 .item-description{
     margin-top: 1px;
@@ -119,7 +126,12 @@
     font-size: 19px;
     color: #117AD8;
 }
-.tool-bar{
+.center.tool-bar input{
+    border: none;
+    font-size: 20px;
+    color: #117AD8;
+    outline:none;
+    color: #117AD8;
 }
 .center.tool-bar button{
     margin-left: 9px;
@@ -130,22 +142,26 @@
 .center.tool-bar i{
     font-size: 18px;
 }
-.center.new-task{
+.center.task{
     display:flex;
+    margin-top: -9px;
 }
-.new-task-icon i {
+.task-icon i {
     margin-top: 4px;
+    color: #117AD8;
 }
-.new-task-input{
+.task-input{
     width:95%;
 }
-.new-task-input input{
+.task-input input{
     width: 90%;
     padding: 7px 0 5px 25px;
     border: none;
     outline: none;
+    color: #117AD8;
+    font-size: 15px;
 }
-.new-task-input input::-webkit-input-placeholder {
+.task-input input::-webkit-input-placeholder {
    color: #117AD8;
    opacity: 1;
     font-size: 15px;
@@ -173,4 +189,10 @@
 .inner{
     margin: 5px 5px 0 5px;
     padding: 10px 10px 10px 10px;
+}
+.list-tasks {
+    padding: 13px 0 0 0;
+}
+div#tasks {
+    width: 95%;
 }
