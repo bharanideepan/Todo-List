@@ -173,15 +173,18 @@
     padding: 48px 0 0 0;
     margin-left: 35px;
     margin-right: 40px;
-}.right-column {
+}
+.right-column {
     background-color: #f4f4f4;
     border-left: 1px solid #ededed;
     width:360px;
     color: #595b5f;
+    display:none;
 }
 .right{
     border: 1px solid #ededed;
     background-color: #ffffff;
+    margin:8px;
 }
 .new-task-right{
     display:flex;
@@ -195,4 +198,21 @@
 }
 div#tasks {
     width: 95%;
+}
+.tasks-bar{
+    display:flex;
+}
+.subTask {
+    display: flex;
+    color: #117AD8;
+    padding-top: 25px;
+}
+#tasks{
+    overFlow:auto;
+}
+#subTasks{
+    overFlow:auto;
+}
+#listsMenu{
+    overFlow:auto;
 }
