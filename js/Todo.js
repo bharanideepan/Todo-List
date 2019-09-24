@@ -43,7 +43,7 @@ defaultTaskList.style.color = "#117AD8";
  */
 menuButton.addEventListener("click", openMenu);
 closeButton.addEventListener("click", closeRightColumn);
-newListInput.addEventListener("keyup", createList);
+newListInput.addEventListener("keyup", addList);
 newTaskInput.addEventListener("keyup", addTask);
 newSubTaskInput.addEventListener("keyup", addSubTask);
 defaultTaskList.addEventListener("click", getDefaultTasks.bind(defaultTasks));
@@ -69,20 +69,46 @@ function openMenu() {
     }
 }
 
-/**
- * Creates a list and append the created list with lists menu
- */
-function createList(event) {
+function addList(event) {
     if(event.which === 13 && event.target.value !== ""){
         tasksContainer.style.height = "";
         defaultTaskList.name = "inActive";
         defaultTaskList.style.color = "#595b5f";
         tasksContainer.innerHTML = "";
-        closeRightColumn()
-
+        closeRightColumn();
         var list = {};
-        list.name = newListInput.value;
+        list.originalName = newListInput.value;
+        list.name = getListName(list.originalName);
         list.tasks = [];
+        list.id = lists.length;
+        lists.push(list);
+        currentListId = list.id;
+        createList(list);
+    }
+}
+
+function getListName(name) {
+    var count = getListsCountByName(name);
+    if(name === "Tasks") {
+        count = count + 1;
+    }
+    if(count !== 0) {
+        return name + "(" + (count) + ")";
+    }
+    return name;
+}
+
+/**
+ * Used to count of array by name
+ */
+function getListsCountByName(name){
+    return lists.filter(list => list.originalName === name).length;
+}
+
+/**
+ * Creates a list and append the created list with lists menu
+ */
+function createList(list) {
     
         var iconName = document.createTextNode("list");
         var icon = document.createElement("I");
@@ -95,11 +121,21 @@ function createList(event) {
         
         var listName = document.createTextNode(list.name);
         var span = document.createElement("SPAN");
-        span.appendChild(listName);
+        span.appendChild(listName);        
+
+        var taskCount = document.createElement("SPAN");
+        taskCount.id = "task-count-span" + list.id;
+        taskCount.className = "task-count-span";
+
+        var subItemDesc = document.createElement("DIV");
+        subItemDesc.className="item-desc-sub";
+        subItemDesc.appendChild(span);
+        subItemDesc.appendChild(taskCount);
         
         var itemDescription = document.createElement("DIV");
         itemDescription.className="item-description";
-        itemDescription.appendChild(span);
+
+        itemDescription.appendChild(subItemDesc);
         itemDescription.style.display="block";
         
         var newListItem = document.createElement("li");
@@ -110,9 +146,6 @@ function createList(event) {
         listTitle.value = list.name;
         newListInput.value = "";
         
-        lists.push(list);
-        list.id = lists.length - 1;
-        currentListId = list.id;
         span.id="list-name" + list.id;
         if(lists.length > 8){
             listsMenu.style.height = "210px";
@@ -121,7 +154,7 @@ function createList(event) {
         }
         newListItem.addEventListener("click", getList.bind(list));
         //listTitle.addEventListener("keyup", updateList.bind(list));
-    }
+
 }
 
 /**
@@ -139,6 +172,7 @@ function createList(event) {
  */
  function addTask(event) {
     if(event.which === 13 && event.target.value !== ""){
+        var list = lists[currentListId];
         var task = {};
         task.name = newTaskInput.value;
         task.status = true;
@@ -152,13 +186,15 @@ function createList(event) {
                 tasksContainer.style.height = "450px";
             }
         } else {
-            task.id = lists[currentListId].tasks.length;
+            task.id = list.tasks.length;
             createTask(task);
-            lists[currentListId].tasks.push(task);
-            if(lists[currentListId].tasks.length > 8){
+            list.tasks.push(task);
+            if(list.tasks.length > 8){
                 tasksContainer.style.height = "450px";
             }
         }
+        document.getElementById("task-count-span" + list.id).textContent =
+                getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
         newTaskInput.value = "";
         taskId = taskId + 1;
     }
@@ -208,6 +244,7 @@ function getDefaultTasks(){
  * Used to display the created task and excisting task of the list
  */
 function createTask(task){
+    var list = lists[currentListId];
     if(task.status === true) {
         var iconName = document.createTextNode("radio_button_unchecked");
     } else {
@@ -265,6 +302,17 @@ function getArrayCountByStatus(array, condition){
 /**
  * Used to display status of subTasks
  */
+function changeTasksCount(){
+    var list = (defaultTaskList.name === "active")
+            ? defaultTasks
+            : lists[currentListId];
+    document.getElementById("task-count-span" + list.id).textContent =
+            getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
+}
+
+/**
+ * Used to display status of subTasks
+ */
 function changeSubTasksCount(){
     var task = (defaultTaskList.name === "active")
             ? defaultTasks.tasks[currentTaskId]
@@ -292,6 +340,7 @@ function manageTask(){
             rightSideTaskInput.style.textDecoration = "none";
             rightSideTaskIcon.innerHTML = "radio_button_unchecked";
     }
+    changeTasksCount();
 }
 
 /**

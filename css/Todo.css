@@ -227,3 +227,11 @@ div#tasks {
     padding: 4px 0 0 25px;
     font-size: 10px;
 }
+.item-desc-sub {
+    display: flex;
+    flex-direction: column;
+}
+.task-count-span {
+    color: #747571;
+    font-size: 10px;
+}
