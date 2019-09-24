@@ -87,6 +87,10 @@
     font-size: 15px;
     display:none;
 }
+.item-description span{
+    max-width:30px;
+    overflow:auto;
+}
 .green{
     color: #79bd65;
 }
@@ -152,6 +156,8 @@
 }
 .task-input{
     width:95%;
+    display: flex;
+    flex-direction: column;
 }
 .task-input input{
     width: 90%;
@@ -215,4 +221,9 @@ div#tasks {
 }
 #listsMenu{
     overFlow:auto;
+}
+.task-input span {
+    color: #646563;
+    padding: 4px 0 0 25px;
+    font-size: 10px;
 }

@@ -113,14 +113,26 @@ function createList(event) {
         lists.push(list);
         list.id = lists.length - 1;
         currentListId = list.id;
+        span.id="list-name" + list.id;
         if(lists.length > 8){
             listsMenu.style.height = "210px";
         } else {
             listsMenu.style.height = "";
         }
         newListItem.addEventListener("click", getList.bind(list));
+        //listTitle.addEventListener("keyup", updateList.bind(list));
     }
 }
+
+/**
+ * Updates the list name
+ *
+ function updateList(event) {
+    if(event.which === 13 && event.target.value !== ""){
+        this.name = listTitle.value;
+        document.getElementById("list-name" + this.id).textContent = this.name;
+    }
+}*/
 
 /**
  * Creates task for a list and append the created task with tasks container
@@ -164,6 +176,7 @@ function getList(){
     defaultTaskList.name = "inActive";
     defaultTaskList.style.color = "#595b5f";
     closeRightColumn()
+    
     currentListId = this.id;
     tasksContainer.innerHTML = "";
     listTitle.value = this.name;
@@ -219,11 +232,19 @@ function createTask(task){
     } else {
         taskName.style.textDecoration = "line-through";
     }
-    
     var taskInput = document.createElement("DIV");
     taskInput.className="task-input";
     taskInput.appendChild(taskName);
     
+    var subTaskLength = document.createElement("span");
+    subTaskLength.id = "sub-task-length" + task.serialNumber;
+    
+    if(task.subTasks.length > 0){
+        taskName.style.height = "5px";
+        subTaskLength.textContent =  getArrayCountByStatus(task.subTasks, false) + " of " + task.subTasks.length;
+    }
+    
+    taskInput.appendChild(subTaskLength);
     var taskContainer = document.createElement("DIV");
     taskContainer.className = "task";
     taskContainer.appendChild(taskIcon);
@@ -232,6 +253,24 @@ function createTask(task){
     tasksContainer.appendChild(taskContainer);
     icon.addEventListener("click", manageTask.bind(task));
     taskName.addEventListener("click", getTask.bind(task));
+}
+
+/**
+ * Used to count of array by status
+ */
+function getArrayCountByStatus(array, condition){
+    return array.filter(element => element.status === condition).length;
+}
+
+/**
+ * Used to display status of subTasks
+ */
+function changeSubTasksCount(){
+    var task = (defaultTaskList.name === "active")
+            ? defaultTasks.tasks[currentTaskId]
+            : lists[currentListId].tasks[currentTaskId];
+    document.getElementById("sub-task-length" + task.serialNumber).textContent =
+            getArrayCountByStatus(task.subTasks, false) + " of " + task.subTasks.length;
 }
 
 /**
@@ -302,7 +341,6 @@ function closeRightColumn(){
             createSubTask(subTask);
             defaultTasks.tasks[currentTaskId].subTasks.push(subTask);
             if(defaultTasks.tasks[currentTaskId].subTasks.length > 1){
-            console.log("> 5");
                 subTasksContainer.style.height = "80px";
             }
         } else {
@@ -314,6 +352,7 @@ function closeRightColumn(){
             }
         }
         subTaskId = subTaskId + 1;
+        changeSubTasksCount();
     }
 }
 
@@ -357,6 +396,7 @@ function createSubTask(subTask){
     
     subTasksContainer.appendChild(taskContainer);
     icon.addEventListener("click", manageSubTask.bind(subTask));
+   
 }
 
 /**
@@ -372,4 +412,5 @@ function manageSubTask(){
         document.getElementById("sub-task" + this.serialNumber).style.textDecoration = "none";
         document.getElementById("sub-task-icon" + this.serialNumber).innerHTML = "radio_button_unchecked";
     }
+    changeSubTasksCount();
 }
