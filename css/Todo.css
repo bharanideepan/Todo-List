@@ -224,7 +224,7 @@ div#tasks {
 }
 .task-input span {
     color: #646563;
-    padding: 4px 0 0 25px;
+    padding: 4px 0 0 0;
     font-size: 10px;
 }
 .item-desc-sub {
@@ -234,4 +234,27 @@ div#tasks {
 .task-count-span {
     color: #747571;
     font-size: 10px;
+}
+
+
+#add-notes[contenteditable] {
+    display: inline-block;
+    outline: none;
+}
+#add-notes[contenteditable]:empty::before {
+    content: 'Add notes';
+    display: inline-block;
+}
+.taskShortDetails {
+    padding-left: 25px;
+}
+i.material-icons.dot {
+    font-size: 5px;
+    padding-left: 5px;
+    color: #b2b3b0;
+}
+i.material-icons.notes-icon {
+    padding-left: 5px;
+    font-size: 14px;
+    color: #b2b3b0;
 }

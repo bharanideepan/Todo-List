@@ -28,6 +28,7 @@ var closeButton = document.getElementById("close-right-column");
 var newSubTaskInput = document.getElementById("newSubTask-input");
 var subTasksContainer = document.getElementById("subTasks");
 var defaultTaskList = document.getElementById("default-task");
+var notes = document.getElementById("add-notes");
 
 /**
  * Creating default tasks holder which is used when no list is created
@@ -47,6 +48,32 @@ newListInput.addEventListener("keyup", addList);
 newTaskInput.addEventListener("keyup", addTask);
 newSubTaskInput.addEventListener("keyup", addSubTask);
 defaultTaskList.addEventListener("click", getDefaultTasks.bind(defaultTasks));
+notes.addEventListener("blur", addNotes);
+
+function addNotes(){
+    var task = (defaultTaskList.name === "active")
+            ? defaultTasks.tasks[currentTaskId]
+            : lists[currentListId].tasks[currentTaskId];
+    task.notes = notes.textContent;
+    var notesContainer = document.getElementById("notes" + task.serialNumber);
+    createNotesContainer(notesContainer);
+}
+
+function createNotesContainer(notesContainer) {
+    notesContainer.textContent = "";
+    var dot = document.createElement("i");
+    dot.className = "material-icons dot";
+    var dotName = document.createTextNode("lens");
+    dot.appendChild(dotName);
+    notesContainer.appendChild(dot);
+    var icon = document.createElement("i");
+    icon.className = "material-icons notes-icon";
+    var iconName = document.createTextNode("description");
+    icon.appendChild(iconName);
+    notesContainer.appendChild(icon);
+    var lable = document.createTextNode("Notes");
+    notesContainer.appendChild(lable);
+}
 
 /**
  * Used to open and close menu bar
@@ -275,21 +302,47 @@ function createTask(task){
     
     var subTaskLength = document.createElement("span");
     subTaskLength.id = "sub-task-length" + task.serialNumber;
+    var notesSpan = document.createElement("span");
+    notesSpan.id = "notes" + task.serialNumber;
     
     if(task.subTasks.length > 0){
         taskName.style.height = "5px";
         subTaskLength.textContent =  getArrayCountByStatus(task.subTasks, false) + " of " + task.subTasks.length;
     }
+    if(task.notes != null) {
+        taskName.style.height = "5px";
+        createNotesContainer(notesSpan);
+    }
     
-    taskInput.appendChild(subTaskLength);
+    var taskShortDetails = document.createElement("DIV");
+    taskShortDetails.className = "taskShortDetails";
+
+    taskShortDetails.appendChild(subTaskLength);
+    taskShortDetails.appendChild(notesSpan);
+
+    taskInput.appendChild(taskShortDetails);
     var taskContainer = document.createElement("DIV");
     taskContainer.className = "task";
+    taskContainer.contextMenu = "mymenu";
     taskContainer.appendChild(taskIcon);
     taskContainer.appendChild(taskInput);
     
     tasksContainer.appendChild(taskContainer);
     icon.addEventListener("click", manageTask.bind(task));
-    taskName.addEventListener("click", getTask.bind(task));
+    taskInput.addEventListener("click", getTask.bind(task));
+
+    taskContainer.addEventListener("contextmenu", getContextMenu.bind(taskContainer));
+}
+
+function getContextMenu(event) {
+    console.log("inside context menu");
+    var menu = document.createElement("menu");
+    menu.type = "context";
+    menu.id = "mymenu";
+    var menuitem = document.createElement("menuitem");
+    menuitem.label = "Delete task";
+    menu.appendChild(menuitem);
+    this.appendChild(menu);
 }
 
 /**
@@ -303,11 +356,14 @@ function getArrayCountByStatus(array, condition){
  * Used to display status of subTasks
  */
 function changeTasksCount(){
-    var list = (defaultTaskList.name === "active")
+    /*var list = (defaultTaskList.name === "active")
             ? defaultTasks
-            : lists[currentListId];
-    document.getElementById("task-count-span" + list.id).textContent =
-            getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
+            : lists[currentListId];*/
+    if(defaultTaskList.name === "inActive") {
+        var list = lists[currentListId];
+        document.getElementById("task-count-span" + list.id).textContent =
+                getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
+    }
 }
 
 /**
@@ -363,6 +419,9 @@ function getTask(){
             rightSideTaskIcon.innerHTML = "check_circle_outline";
     }
     subTasksContainer.innerHTML = "";
+
+    notes.textContent = this.notes;
+
     for (subTask of this.subTasks) {
         createSubTask(subTask);
     }
