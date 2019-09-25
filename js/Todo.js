@@ -192,9 +192,9 @@ function createList(list) {
             if(list.tasks.length > 8){
                 tasksContainer.style.height = "450px";
             }
+            document.getElementById("task-count-span" + list.id).textContent =
+                    getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
         }
-        document.getElementById("task-count-span" + list.id).textContent =
-                getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
         newTaskInput.value = "";
         taskId = taskId + 1;
     }
@@ -211,7 +211,7 @@ function getList(){
     }
     defaultTaskList.name = "inActive";
     defaultTaskList.style.color = "#595b5f";
-    closeRightColumn()
+    closeRightColumn();
     
     currentListId = this.id;
     tasksContainer.innerHTML = "";
@@ -232,7 +232,7 @@ function getDefaultTasks(){
     }
     defaultTaskList.name = "active";
     defaultTaskList.style.color = "#117AD8";
-    closeRightColumn()
+    closeRightColumn();
     tasksContainer.innerHTML = "";
     listTitle.value = this.name;
     for (task of this.tasks) {

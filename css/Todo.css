@@ -88,7 +88,7 @@
     display:none;
 }
 .item-description span{
-    max-width:30px;
+    max-width:200px;
     overflow:auto;
 }
 .green{
