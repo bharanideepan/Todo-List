@@ -78,7 +78,10 @@
                                             <i class="material-icons">list</i>
                                         </div>
                                         <div class="item-description">
-                                            <span>abc</span>
+                                            <div class="item-desc-sub">
+                                                <span id="list-name">abc</span>
+                                                <span id="task-count0" class="task-count">abc</span>
+                                            </div>
                                         </div>
                                     </li>-->
                                 </div>
@@ -201,8 +204,8 @@
                             </div>
                         </div>
                         <div class="right notes">
-                            <div class="innerAdd">
-                                <span>Add note</span>
+                            <div class="inner">
+                                <span contentEditable="true" id="add-notes"></span>
                             </div>
                         </div>
                         <div class="right footer">
@@ -210,6 +213,15 @@
                                 <i id="close-right-column" class="material-icons">arrow_forward</i>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div id="popUpId" class="popUp">
+                <div id="popUpInnerId" class="popUpInner">
+                    <span>You won't be able to undo this action!</span>
+                    <div class="btns">
+                            <button class="cancelBtn">Cancel</button>
+                            <button class="deleteBtn">Delete</button>
                     </div>
                 </div>
             </div>
