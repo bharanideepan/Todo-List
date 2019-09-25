@@ -8,6 +8,7 @@ var currentListId = 0;
 var taskId = 0;
 var currentTaskId = 0;
 var subTaskId = 0;
+var currentSubTaskId = 0;
 
 /**
  * Elements which are needed from the document 
@@ -29,6 +30,7 @@ var newSubTaskInput = document.getElementById("newSubTask-input");
 var subTasksContainer = document.getElementById("subTasks");
 var defaultTaskList = document.getElementById("default-task");
 var notes = document.getElementById("add-notes");
+var popUp = document.getElementById("popUpId");
 
 /**
  * Creating default tasks holder which is used when no list is created
@@ -205,6 +207,7 @@ function createList(list) {
         task.status = true;
         task.subTasks = [];
         task.serialNumber = taskId;
+        task.isDeleted = false;
         if(defaultTaskList.name === "active") {
             task.id = defaultTasks.tasks.length;
             createTask(task);
@@ -307,7 +310,9 @@ function createTask(task){
     
     if(task.subTasks.length > 0){
         taskName.style.height = "5px";
-        subTaskLength.textContent =  getArrayCountByStatus(task.subTasks, false) + " of " + task.subTasks.length;
+        subTaskLength.textContent = 
+                getArrayCountByStatus(task.subTasks, false) + " of " + 
+                getUndeletedArrayCount(task.subTasks);
     }
     if(task.notes != null) {
         taskName.style.height = "5px";
@@ -349,7 +354,15 @@ function getContextMenu(event) {
  * Used to count of array by status
  */
 function getArrayCountByStatus(array, condition){
-    return array.filter(element => element.status === condition).length;
+    var subArray = array.filter(element => element.isDeleted === false);
+    return subArray.filter(element => element.status === condition).length;
+}
+
+/**
+ * Used to count of array by status
+ */
+function getUndeletedArrayCount(array){
+    return array.filter(element => element.isDeleted === false).length;
 }
 
 /**
@@ -374,7 +387,7 @@ function changeSubTasksCount(){
             ? defaultTasks.tasks[currentTaskId]
             : lists[currentListId].tasks[currentTaskId];
     document.getElementById("sub-task-length" + task.serialNumber).textContent =
-            getArrayCountByStatus(task.subTasks, false) + " of " + task.subTasks.length;
+            getArrayCountByStatus(task.subTasks, false) + " of " + getUndeletedArrayCount(task.subTasks);
 }
 
 /**
@@ -418,12 +431,13 @@ function getTask(){
         rightSideTaskInput.style.textDecoration = "line-through";
             rightSideTaskIcon.innerHTML = "check_circle_outline";
     }
-    subTasksContainer.innerHTML = "";
 
     notes.textContent = this.notes;
+    subTasksContainer.innerHTML = "";
 
     for (subTask of this.subTasks) {
-        createSubTask(subTask);
+        if(!subTask.isDeleted)
+            createSubTask(subTask);
     }
 }
 
@@ -444,6 +458,7 @@ function closeRightColumn(){
         newSubTaskInput.value = "";
         subTask.status = true;
         subTask.serialNumber = subTaskId;
+        subTask.isDeleted = false;
         if(defaultTaskList.name === "active") {
             subTask.id = defaultTasks.tasks[currentTaskId].subTasks.length;
             createSubTask(subTask);
@@ -496,15 +511,82 @@ function createSubTask(subTask){
     var taskInput = document.createElement("DIV");
     taskInput.className="task-input";
     taskInput.appendChild(taskName);
+
+    var dltIconName = document.createTextNode("clear");
+    var dltIcon = document.createElement("I");
+    dltIcon.className = "material-icons";
+    dltIcon.id = "sub-task-dlt-icon" + subTask.serialNumber;
+    dltIcon.appendChild(dltIconName);
+
+    var deleteDiv = document.createElement("DIV");
+    deleteDiv.className="task-delete";
+    deleteDiv.appendChild(dltIcon);
+    deleteDiv.style.display = "none";
     
     var taskContainer = document.createElement("DIV");
     taskContainer.className = "subTask";
     taskContainer.appendChild(taskIcon);
     taskContainer.appendChild(taskInput);
+    taskContainer.appendChild(deleteDiv);
     
     subTasksContainer.appendChild(taskContainer);
     icon.addEventListener("click", manageSubTask.bind(subTask));
-   
+    taskContainer.addEventListener("mouseover", function(){
+        deleteDiv.style.display = "block";
+    });
+    taskContainer.addEventListener("mouseout", function(){
+        deleteDiv.style.display = "none";
+    });
+    dltIcon.addEventListener("click", getConfirmation.bind(subTask));
+}
+
+/*function confirmDeletion() {
+    var cnfrmMsg = document.createElement("span");
+    cnfrmMsg.textContent = "Do you want to delete?"
+    var msg = document.createElement("span");
+    msg.textContent = "you won't be able to undo this action"
+    var cancelBtn = document.createElement("button");
+    cancelBtn.className = "cancelBtn";
+    cancelBtn.textContent = "Cancel";
+    var deleteBtn = document.createElement("button");
+    deleteBtn.className = "deleteBtn";
+    deleteBtn.textContent = "Delete";
+    var popUpInnerDiv = document.createElement("div");
+    popUpInnerDiv.id = "popUpInnerId";
+    popUpInnerDiv.className = "popUpInner";
+    popUpInnerDiv.appendChild(cnfrmMsg);
+    popUpInnerDiv.appendChild(msg);
+    popUpInnerDiv.appendChild(cancelBtn);
+    popUpInnerDiv.appendChild(deleteBtn);
+    var popUpDiv = document.createElement("div");
+    popUpDiv.id = "popUpId";
+    popUpDiv.className = "popUp";
+    popUpDiv.appendChild(popUpInnerDiv);
+    body.appendChild(popUpDiv);
+    
+}*/
+function getConfirmation(){
+    currentSubTaskId = this.id;
+    popUp.style.display = "block";
+}
+var deleteBtn = document.getElementsByClassName("deleteBtn")[0];
+var cancelBtn = document.getElementsByClassName("cancelBtn")[0];
+deleteBtn.addEventListener("click", deleteSubTask);
+cancelBtn.addEventListener("click", function(){
+    popUp.style.display = "none";
+});
+function deleteSubTask() {
+    var task = (defaultTaskList.name === "active")
+            ? defaultTasks.tasks[currentTaskId]
+            : lists[currentListId].tasks[currentTaskId];
+    task.subTasks[currentSubTaskId].isDeleted = true;
+    changeSubTasksCount();
+    subTasksContainer.innerHTML = "";
+    for (subTask of task.subTasks) {
+        if(!subTask.isDeleted)
+            createSubTask(subTask);
+    }
+    popUp.style.display = "none";
 }
 
 /**
