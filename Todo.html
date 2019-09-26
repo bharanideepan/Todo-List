@@ -61,7 +61,7 @@
                                     </li>
                                 </div>
                                 <div class="nav-item tasks">
-                                    <li id="default-task">
+                                    <li id="default-task" class="default-task-li">
                                         <div class="item-icon">
                                             <i class="material-icons">home</i>
                                         </div>
@@ -92,7 +92,7 @@
                                         <i id="add-btn" class="material-icons" value="close">add</i>
                                     </label>
                                 </div>
-                                <div class="add-list-input">
+                                <div class="item-description add-list-input">
                                     <input id="addList-input" type="text" maxlength="255" placeholder="New list">
                                 </div>
                             </div>
@@ -218,6 +218,15 @@
             </div>
             <div id="popUpId" class="popUp">
                 <div id="popUpInnerId" class="popUpInner">
+                    <span>You won't be able to undo this action!</span>
+                    <div class="btns">
+                            <button class="cancelBtn">Cancel</button>
+                            <button class="deleteBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div id="popUpId1" class="popUp">
+                <div id="popUpInnerId1" class="popUpInner" style="background-color: blueviolet">
                     <span>You won't be able to undo this action!</span>
                     <div class="btns">
                             <button class="cancelBtn">Cancel</button>

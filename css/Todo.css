@@ -276,7 +276,7 @@ i.material-icons.notes-icon {
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
-  }
+}
 
 .popUpInner {
     background: white;
@@ -285,7 +285,7 @@ i.material-icons.notes-icon {
     border: 1px solid #888;
     width: 12%;
     border-radius: 5px;
-  }
+}
 .btns{
     margin-top: 25px;
 }
@@ -300,4 +300,34 @@ i.material-icons.notes-icon {
 }
 .cancelBtn {
     background-color: #4070e0;
+}
+.nav-bar-open {
+    width:295px;
+}
+.display{
+    display:block;
+}
+.default-task-li {
+    color: #117AD8;
+}
+.gray-color{
+    color: #595b5f;
+}
+.lists-menu-height {
+    height: 210px;
+}
+.tasks-height {
+    height: 450px;
+}
+.line-through{
+    text-decoration: line-through;
+}
+.task-height {
+    height: 5px;
+}
+.sub-tasks-height {
+    height: 80px;
+}
+.delete-task{
+    display: none;
 }
