@@ -1,110 +1,159 @@
+
+init();
+
+function init(){
+    declareGlobalVariables();
+    initializeEventListeners();
+}
+
 /**
  * Global variables which are used to store lists
  * And track number of lists and tasks added
  */
-var lists = [];
-var listId = 0;
-var currentListId = 0;
-var taskId = 0;
-var currentTaskId = 0;
-var subTaskId = 0;
-var currentSubTaskId = 0;
+function declareGlobalVariables(){
+    defaultTasks = {};
+    defaultTasks.name = "Tasks";
+    defaultTasks.tasks = [];
+    lists = [];
+    listId = 0;
+    currentListId = 0;
+    taskId = 0;
+    currentTaskId = 0;
+    subTaskId = 0;
+    currentSubTaskId = 0;
 
-/**
- * Elements which are needed from the document 
- */
-var menuButton = document.getElementById("menu-btn");
-var navBar = document.getElementById("nav-bar");
-var itemDescriptions = document.getElementsByClassName("item-description");
-var addNewListInput = document.getElementsByClassName("add-list-input")[0];
-var newListInput = document.getElementById("addList-input");
-var listsMenu = document.getElementById("listsMenu");
-var listTitle = document.getElementById("list-title");
-var newTaskInput = document.getElementById("newTask-input");
-var tasksContainer = document.getElementById("tasks");
-var rightSideTaskInput = document.getElementById("tasksInput-right");
-var rightSideTaskIcon = document.getElementById("tasksIcon-right");
-var rightColumn = document.getElementById("rightColumn");
-var closeButton = document.getElementById("close-right-column");
-var newSubTaskInput = document.getElementById("newSubTask-input");
-var subTasksContainer = document.getElementById("subTasks");
-var defaultTaskList = document.getElementById("default-task");
-var notes = document.getElementById("add-notes");
-var popUp = document.getElementById("popUpId");
-
-/**
- * Creating default tasks holder which is used when no list is created
- */
-var defaultTasks = {};
-defaultTasks.name = "Tasks";
-defaultTasks.tasks = [];
-defaultTaskList.name = "active";
-defaultTaskList.style.color = "#117AD8";
-
-/**
- * Event listeners which are initialized at the start of the application
- */
-menuButton.addEventListener("click", openMenu);
-closeButton.addEventListener("click", closeRightColumn);
-newListInput.addEventListener("keyup", addList);
-newTaskInput.addEventListener("keyup", addTask);
-newSubTaskInput.addEventListener("keyup", addSubTask);
-defaultTaskList.addEventListener("click", getDefaultTasks.bind(defaultTasks));
-notes.addEventListener("blur", addNotes);
-
-function addNotes(){
-    var task = (defaultTaskList.name === "active")
-            ? defaultTasks.tasks[currentTaskId]
-            : lists[currentListId].tasks[currentTaskId];
-    task.notes = notes.textContent;
-    var notesContainer = document.getElementById("notes" + task.serialNumber);
-    createNotesContainer(notesContainer);
+    defaultTaskList = getElementById("default-task");
+    defaultTaskList.name = "active";
+    newListInput = getElementById("addList-input");
+    listsMenu = getElementById("listsMenu");
+    listTitle = getElementById("list-title");
+    newTaskInput = getElementById("newTask-input");
+    tasksContainer = getElementById("tasks");
+    subTasksContainer = getElementById("subTasks");
+    rightSideTaskInput = getElementById("tasksInput-right");
+    rightColumn = getElementById("rightColumn");
+    newSubTaskInput = getElementById("newSubTask-input");
+    notes = getElementById("add-notes");
+    rightSideTaskIcon = getElementById("tasksIcon-right");
+    popUp = getElementById("popUpId");
 }
 
-function createNotesContainer(notesContainer) {
-    notesContainer.textContent = "";
-    var dot = document.createElement("i");
-    dot.className = "material-icons dot";
-    var dotName = document.createTextNode("lens");
-    dot.appendChild(dotName);
-    notesContainer.appendChild(dot);
-    var icon = document.createElement("i");
-    icon.className = "material-icons notes-icon";
-    var iconName = document.createTextNode("description");
-    icon.appendChild(iconName);
-    notesContainer.appendChild(icon);
-    var lable = document.createTextNode("Notes");
-    notesContainer.appendChild(lable);
+/**
+ * Adds event listener for the element in the beginning of the application
+ */
+function initializeEventListeners(){
+    addEventListener(getElementById("menu-btn"), "click", openMenu);
+    bindEventListener(defaultTaskList, "click", getDefaultTasks, defaultTasks);
+    addEventListener(newListInput, "keyup", addList);
+    addEventListener(newTaskInput, "keyup", addTask);
+    addEventListener(getElementById("close-right-column"), "click", function(){
+        rightColumn.classList.remove("display");
+    });
+    addEventListener(newSubTaskInput, "keyup", addSubTask);
+    addEventListener(notes, "blur", addNotes);
+    addEventListener(getElementsByClassName("deleteBtn")[0], "click", deleteSubTask);
+    addEventListener(getElementsByClassName("cancelBtn")[0], "click", function (){
+        popUp.classList.remove("display");
+    });
+}
+
+/**
+ * Gets the element by Id
+ * 
+ * @param {String} id - Id of the element
+ */
+function getElementById(id){
+    return document.getElementById(id);
+}
+
+/**
+ * Gets the elements by class name
+ * 
+ * @param {String} className - class name of the element
+ */
+function getElementsByClassName(className){
+    return document.getElementsByClassName(className);
+}
+
+/**
+ * Adds event listener for the element
+ * 
+ * @param {Object} element - Document object which is needed to add event listener
+ * @param {String} event - Which is the event
+ * @param {myFunction} myFunction - Function which is to be executed when the event is passed on the element
+ */
+function addEventListener(element, event, myFunction){
+    element.addEventListener(event, myFunction);
+}
+
+/**
+ * Adds event listener for the element and also binds the object
+ * 
+ * @param {Object} element - Document object which is needed to add event listener
+ * @param {String} event - Which is the event
+ * @param {myFunction} myFunction - Function which is to be executed when the event is passed on the element
+ * @param {Object} bindElement - Object which is to be binded with the function
+ */
+function bindEventListener(element, event, myFunction, bindElement){
+    element.addEventListener(event, myFunction.bind(bindElement));
+}
+
+/**
+ * Inserts the given text into the given element
+ * 
+ * @param {Object} element - Document object to which text to be added
+ * @param {String} text - Text to be inserted into the element
+ */
+function writeInnerHTML(element, text){
+    element.innerHTML = text;
+}
+
+/**
+ * Creates an element and adds class name and id if provided
+ * 
+ * @param {String} elementName - Name of the element to be created
+ * @param {String} className - Class name may or may not be present
+ * @param {String} id - Id may or may not be present
+ */
+function createElement(elementName, className = "", id = ""){
+    var element = document.createElement(elementName);
+    element.className = className;
+    element.id = id;
+    return element;
+}
+
+/**
+ * Appends the child element with the parent
+ * 
+ * @param {Object} parentElement
+ * @param {Object} childElement 
+ */
+function appendChild(parentElement, childElement){
+    parentElement.appendChild(childElement);
 }
 
 /**
  * Used to open and close menu bar
  */
 function openMenu() {
-    if(menuButton.value === "close") {
-        menuButton.value="open";
-        navBar.style.width="295px";
-        for (i = 0; i < itemDescriptions.length; i++) {
-            itemDescriptions[i].style.display = "block";
-        }
-        addNewListInput.style.display = "block";
-    } else {
-        menuButton.value="close";
-        navBar.style.width="55px";
-        for (i = 0; i < itemDescriptions.length; i++) {
-            itemDescriptions[i].style.display = "none";
-        }
-        addNewListInput.style.display = "none";
+    var itemDescriptions = getElementsByClassName("item-description");
+    for(itemDescription of itemDescriptions){
+        itemDescription.classList.toggle("display");
     }
+    getElementById("nav-bar").classList.toggle("nav-bar-open");
 }
 
+/**
+ * Used to add a list
+ * 
+ * @param {*} event
+ */
 function addList(event) {
     if(event.which === 13 && event.target.value !== ""){
-        tasksContainer.style.height = "";
         defaultTaskList.name = "inActive";
-        defaultTaskList.style.color = "#595b5f";
-        tasksContainer.innerHTML = "";
-        closeRightColumn();
+        defaultTaskList.classList.add("gray-color");
+        rightColumn.classList.remove("display");
+        writeInnerHTML(tasksContainer, "");
         var list = {};
         list.originalName = newListInput.value;
         list.name = getListName(list.originalName);
@@ -116,6 +165,12 @@ function addList(event) {
     }
 }
 
+/**
+ * Checks whether the name is already present
+ * If yes this method appends number with the name
+ * 
+ * @param {String} name - Name of the object
+ */
 function getListName(name) {
     var count = getListsCountByName(name);
     if(name === "Tasks") {
@@ -128,106 +183,36 @@ function getListName(name) {
 }
 
 /**
- * Used to count of array by name
- */
-function getListsCountByName(name){
-    return lists.filter(list => list.originalName === name).length;
-}
-
-/**
  * Creates a list and append the created list with lists menu
+ * 
+ * @param {Object} list - Created list which is to be displayed to the client
  */
 function createList(list) {
-    
-        var iconName = document.createTextNode("list");
-        var icon = document.createElement("I");
-        icon.className="material-icons";
-        icon.appendChild(iconName);
-        
-        var itemIcon = document.createElement("DIV");
-        itemIcon.className="item-icon";
-        itemIcon.appendChild(icon);
-        
-        var listName = document.createTextNode(list.name);
-        var span = document.createElement("SPAN");
-        span.appendChild(listName);        
-
-        var taskCount = document.createElement("SPAN");
-        taskCount.id = "task-count-span" + list.id;
-        taskCount.className = "task-count-span";
-
-        var subItemDesc = document.createElement("DIV");
-        subItemDesc.className="item-desc-sub";
-        subItemDesc.appendChild(span);
-        subItemDesc.appendChild(taskCount);
-        
-        var itemDescription = document.createElement("DIV");
-        itemDescription.className="item-description";
-
-        itemDescription.appendChild(subItemDesc);
-        itemDescription.style.display="block";
-        
-        var newListItem = document.createElement("li");
-        newListItem.appendChild(itemIcon);
-        newListItem.appendChild(itemDescription);
-        
-        listsMenu.appendChild(newListItem);
+        var icon = createElement("I", "material-icons");
+        writeInnerHTML(icon, "list");
+        var itemIcon = document.createElement("DIV", "item-icon");
+        appendChild(itemIcon, icon);
+        var span = createElement("SPAN", "", "list-name" + list.id);
+        writeInnerHTML(span, list.name); 
+        var taskCount = createElement("SPAN", "task-count-span", "task-count-span" + list.id);
+        var subItemDesc = createElement("DIV", "item-desc-sub");
+        appendChild(subItemDesc, span);
+        appendChild(subItemDesc, taskCount);
+        var itemDescription = createElement("DIV", "item-description");
+        appendChild(itemDescription, subItemDesc);
+        itemDescription.classList.add("display");
+        var newListItem = createElement("li");
+        appendChild(newListItem, itemIcon);
+        appendChild(newListItem, itemDescription);
+        appendChild(listsMenu, newListItem);
         listTitle.value = list.name;
         newListInput.value = "";
-        
-        span.id="list-name" + list.id;
         if(lists.length > 8){
-            listsMenu.style.height = "210px";
+            listsMenu.classList.add("lists-menu-height");
         } else {
-            listsMenu.style.height = "";
+            listsMenu.classList.remove("lists-menu-height");
         }
-        newListItem.addEventListener("click", getList.bind(list));
-        //listTitle.addEventListener("keyup", updateList.bind(list));
-
-}
-
-/**
- * Updates the list name
- *
- function updateList(event) {
-    if(event.which === 13 && event.target.value !== ""){
-        this.name = listTitle.value;
-        document.getElementById("list-name" + this.id).textContent = this.name;
-    }
-}*/
-
-/**
- * Creates task for a list and append the created task with tasks container
- */
- function addTask(event) {
-    if(event.which === 13 && event.target.value !== ""){
-        var list = lists[currentListId];
-        var task = {};
-        task.name = newTaskInput.value;
-        task.status = true;
-        task.subTasks = [];
-        task.serialNumber = taskId;
-        task.isDeleted = false;
-        if(defaultTaskList.name === "active") {
-            task.id = defaultTasks.tasks.length;
-            createTask(task);
-            defaultTasks.tasks.push(task);
-            if(defaultTasks.tasks.length > 8){
-                tasksContainer.style.height = "450px";
-            }
-        } else {
-            task.id = list.tasks.length;
-            createTask(task);
-            list.tasks.push(task);
-            if(list.tasks.length > 8){
-                tasksContainer.style.height = "450px";
-            }
-            document.getElementById("task-count-span" + list.id).textContent =
-                    getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
-        }
-        newTaskInput.value = "";
-        taskId = taskId + 1;
-    }
+        bindEventListener(newListItem, "click", getList, list);
 }
 
 /**
@@ -235,16 +220,15 @@ function createList(list) {
  */
 function getList(){
     if(lists[currentListId].tasks.length > 8){
-        tasksContainer.style.height = "450px";
+        tasksContainer.classList.add("tasks-height");
     } else {
-        tasksContainer.style.height = "";
+        tasksContainer.classList.remove("tasks-height");
     }
     defaultTaskList.name = "inActive";
-    defaultTaskList.style.color = "#595b5f";
-    closeRightColumn();
-    
+    defaultTaskList.classList.add("gray-color");
+    rightColumn.classList.remove("display");
     currentListId = this.id;
-    tasksContainer.innerHTML = "";
+    writeInnerHTML(tasksContainer, "");
     listTitle.value = this.name;
     for (task of this.tasks) {
         createTask(task);
@@ -256,14 +240,14 @@ function getList(){
  */
 function getDefaultTasks(){
     if(defaultTasks.tasks.length > 8){
-        tasksContainer.style.height = "450px";
+        tasksContainer.classList.add("tasks-height");
     } else {
-        tasksContainer.style.height = "";
+        tasksContainer.classList.remove("tasks-height");
     }
     defaultTaskList.name = "active";
-    defaultTaskList.style.color = "#117AD8";
-    closeRightColumn();
-    tasksContainer.innerHTML = "";
+    defaultTaskList.classList.remove("grey-color");
+    rightColumn.classList.remove("display");
+    writeInnerHTML(tasksContainer, "");
     listTitle.value = this.name;
     for (task of this.tasks) {
         createTask(task);
@@ -271,145 +255,91 @@ function getDefaultTasks(){
 }
 
 /**
+ * Creates task for a list and append the created task with tasks container
+ * 
+ * @param {*} event
+ */
+ function addTask(event) {
+    if(event.which === 13 && event.target.value !== ""){
+        var task = {};
+        task.name = newTaskInput.value;
+        task.status = true;
+        task.subTasks = [];
+        task.serialNumber = taskId;
+        task.isDeleted = false;
+        task.notes = "";
+        var list = (defaultTaskList.name === "active")
+                ? defaultTasks : lists[currentListId];
+        task.id = list.tasks.length;
+        createTask(task);
+        list.tasks.push(task);
+        if(list.tasks.length > 8)
+        tasksContainer.classList.add("tasks-height");
+        if(defaultTaskList.name !== "active") {
+            var tasksCountContainer = getElementById("task-count-span" + list.id);
+            writeInnerHTML(tasksCountContainer, getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length);
+        }
+        newTaskInput.value = "";
+        taskId = taskId + 1;
+    }
+}
+
+/**
+ * Used to count of array by status
+ * 
+ * @param {Array} array - Array of objects to be filtered
+ * @param {Boolean} condition - Condition to be applied for filtering
+ */
+function getArrayCountByStatus(array, condition){
+    return array.filter(element => element.status === condition && element.isDeleted === false).length;
+}
+
+/**
  * Used to display the created task and excisting task of the list
+ * 
+ * @param {Object} task - Task to be displayed to the client
  */
 function createTask(task){
     var list = lists[currentListId];
-    if(task.status === true) {
-        var iconName = document.createTextNode("radio_button_unchecked");
-    } else {
-        var iconName = document.createTextNode("check_circle_outline");
-    }
-    var icon = document.createElement("I");
-    icon.className="material-icons";
-    icon.id = "task-icon" + task.serialNumber;
-    icon.appendChild(iconName);
-    
-    var taskIcon = document.createElement("DIV");
-    taskIcon.className="task-icon";
-    taskIcon.appendChild(icon);
-    
-    var taskName = document.createElement("INPUT");
+    var iconName = (task.status) ? "radio_button_unchecked" : "check_circle_outline";
+    var icon = createElement("I", "material-icons", "task-icon" + task.serialNumber);
+    writeInnerHTML(icon, iconName);
+    var taskIcon = createElement("DIV", "task-icon");
+    appendChild(taskIcon, icon);
+    var taskName = createElement("INPUT", "", "task" + task.serialNumber);
     taskName.value = task.name;
-    taskName.id = "task" + task.serialNumber;
     taskName.readOnly = true;
-    
-    if(task.status === true){
-        taskName.style.textDecoration = "none";
+    if(task.status){
+        taskName.classList.remove("line-through");
     } else {
-        taskName.style.textDecoration = "line-through";
+        taskName.classList.add("line-through");
     }
-    var taskInput = document.createElement("DIV");
-    taskInput.className="task-input";
-    taskInput.appendChild(taskName);
-    
-    var subTaskLength = document.createElement("span");
-    subTaskLength.id = "sub-task-length" + task.serialNumber;
-    var notesSpan = document.createElement("span");
-    notesSpan.id = "notes" + task.serialNumber;
-    
+    var taskInput = createElement("DIV", "task-input");
+    appendChild(taskInput, taskName);
+    var subTaskLength = createElement("span", "", "sub-task-length" + task.serialNumber);
+    var notesSpan = createElement("span", "", "notes" + task.serialNumber);
     if(task.subTasks.length > 0){
-        taskName.style.height = "5px";
-        subTaskLength.textContent = 
-                getArrayCountByStatus(task.subTasks, false) + " of " + 
-                getUndeletedArrayCount(task.subTasks);
+        taskName.classList.add("task-height");
+        writeInnerHTML(subTaskLength,
+                getArrayCountByStatus(task.subTasks, false) + " of " +
+                        getUndeletedArrayCount(task.subTasks));
     }
-    if(task.notes != null) {
-        taskName.style.height = "5px";
+    if(task.notes !== "") {
+        taskName.classList.add("task-height");
         createNotesContainer(notesSpan);
     }
-    
-    var taskShortDetails = document.createElement("DIV");
-    taskShortDetails.className = "taskShortDetails";
-
-    taskShortDetails.appendChild(subTaskLength);
-    taskShortDetails.appendChild(notesSpan);
-
-    taskInput.appendChild(taskShortDetails);
-    var taskContainer = document.createElement("DIV");
-    taskContainer.className = "task";
+    var taskShortDetails = createElement("DIV", "taskShortDetails");
+    appendChild(taskShortDetails, subTaskLength);
+    appendChild(taskShortDetails, notesSpan);
+    appendChild(taskInput, taskShortDetails);
+    var taskContainer = createElement("DIV", "task");
     taskContainer.contextMenu = "mymenu";
-    taskContainer.appendChild(taskIcon);
-    taskContainer.appendChild(taskInput);
-    
-    tasksContainer.appendChild(taskContainer);
-    icon.addEventListener("click", manageTask.bind(task));
-    taskInput.addEventListener("click", getTask.bind(task));
-
-    taskContainer.addEventListener("contextmenu", getContextMenu.bind(taskContainer));
-}
-
-function getContextMenu(event) {
-    console.log("inside context menu");
-    var menu = document.createElement("menu");
-    menu.type = "context";
-    menu.id = "mymenu";
-    var menuitem = document.createElement("menuitem");
-    menuitem.label = "Delete task";
-    menu.appendChild(menuitem);
-    this.appendChild(menu);
-}
-
-/**
- * Used to count of array by status
- */
-function getArrayCountByStatus(array, condition){
-    var subArray = array.filter(element => element.isDeleted === false);
-    return subArray.filter(element => element.status === condition).length;
-}
-
-/**
- * Used to count of array by status
- */
-function getUndeletedArrayCount(array){
-    return array.filter(element => element.isDeleted === false).length;
-}
-
-/**
- * Used to display status of subTasks
- */
-function changeTasksCount(){
-    /*var list = (defaultTaskList.name === "active")
-            ? defaultTasks
-            : lists[currentListId];*/
-    if(defaultTaskList.name === "inActive") {
-        var list = lists[currentListId];
-        document.getElementById("task-count-span" + list.id).textContent =
-                getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length;
-    }
-}
-
-/**
- * Used to display status of subTasks
- */
-function changeSubTasksCount(){
-    var task = (defaultTaskList.name === "active")
-            ? defaultTasks.tasks[currentTaskId]
-            : lists[currentListId].tasks[currentTaskId];
-    document.getElementById("sub-task-length" + task.serialNumber).textContent =
-            getArrayCountByStatus(task.subTasks, false) + " of " + getUndeletedArrayCount(task.subTasks);
-}
-
-/**
- * Used to change the status of the tasks
- */
-function manageTask(){
-    if(this.status === true) {
-        this.status = false;
-        document.getElementById("task" + this.serialNumber).style.textDecoration = "line-through";
-        document.getElementById("task-icon" + this.serialNumber).innerHTML = "check_circle_outline";
-        if(this.name === rightSideTaskInput.value)
-            rightSideTaskInput.style.textDecoration = "line-through";
-            rightSideTaskIcon.innerHTML = "check_circle_outline";
-    } else {
-        this.status = true;
-        document.getElementById("task" + this.serialNumber).style.textDecoration = "none";
-        document.getElementById("task-icon" + this.serialNumber).innerHTML = "radio_button_unchecked";
-        if(this.name === rightSideTaskInput.value)
-            rightSideTaskInput.style.textDecoration = "none";
-            rightSideTaskIcon.innerHTML = "radio_button_unchecked";
-    }
-    changeTasksCount();
+    appendChild(taskContainer, taskIcon);
+    appendChild(taskContainer, taskInput);
+    appendChild(tasksContainer, taskContainer);
+    bindEventListener(icon, "click", manageTask, task);
+    bindEventListener(taskInput, "click", getTask, task);
+    //bindEventListener(taskContainer, "contextmenu", getContextMenu, taskContainer);
 }
 
 /**
@@ -417,24 +347,22 @@ function manageTask(){
  */
 function getTask(){
     if(this.subTasks.length > 1){
-        subTasksContainer.style.height = "80px";
+        subTasksContainer.classList.add("sub-tasks-height");
     } else {
-        subTasksContainer.style.height = "";
+        subTasksContainer.classList.remove("sub-tasks-height");
     }
     currentTaskId = this.id;
-    rightColumn.style.display = "block";
+    rightColumn.classList.add("display");
     rightSideTaskInput.value = this.name;
-    if(this.status === true) {
-        rightSideTaskInput.style.textDecoration = "none";
-            rightSideTaskIcon.innerHTML = "radio_button_unchecked";
+    if(this.status) {
+        rightSideTaskInput.classList.remove("line-through");
+        writeInnerHTML(rightSideTaskIcon, "radio_button_unchecked");
     } else {
-        rightSideTaskInput.style.textDecoration = "line-through";
-            rightSideTaskIcon.innerHTML = "check_circle_outline";
+        rightSideTaskInput.classList.add("line-through");
+        writeInnerHTML(rightSideTaskIcon, "check_circle_outline");
     }
-
-    notes.textContent = this.notes;
-    subTasksContainer.innerHTML = "";
-
+    writeInnerHTML(notes, this.notes);
+    writeInnerHTML(subTasksContainer, "");
     for (subTask of this.subTasks) {
         if(!subTask.isDeleted)
             createSubTask(subTask);
@@ -442,14 +370,9 @@ function getTask(){
 }
 
 /**
- * Used to close the right column
- */
-function closeRightColumn(){
-    rightColumn.style.display = "none";
-}
-
-/**
  * Creates subTask for a task and append the created subTask with subTasks container
+ * 
+ * @param {*} event
  */
  function addSubTask(event) {
     if(event.which === 13 && event.target.value !== ""){
@@ -459,20 +382,12 @@ function closeRightColumn(){
         subTask.status = true;
         subTask.serialNumber = subTaskId;
         subTask.isDeleted = false;
-        if(defaultTaskList.name === "active") {
-            subTask.id = defaultTasks.tasks[currentTaskId].subTasks.length;
-            createSubTask(subTask);
-            defaultTasks.tasks[currentTaskId].subTasks.push(subTask);
-            if(defaultTasks.tasks[currentTaskId].subTasks.length > 1){
-                subTasksContainer.style.height = "80px";
-            }
-        } else {
-            subTask.id = lists[currentListId].tasks[currentTaskId].subTasks.length;
-            createSubTask(subTask);
-            lists[currentListId].tasks[currentTaskId].subTasks.push(subTask);
-            if(lists[currentListId].tasks[currentTaskId].subTasks.length > 1){
-                subTasksContainer.style.height = "80px";
-            }
+        var list = (defaultTaskList.name === "active") ? defaultTasks : lists[currentListId];
+        subTask.id = list.tasks[currentTaskId].subTasks.length;
+        createSubTask(subTask);
+        list.tasks[currentTaskId].subTasks.push(subTask);
+        if(list.tasks[currentTaskId].subTasks.length > 1){
+            subTasksContainer.classList.add("sub-tasks-height");
         }
         subTaskId = subTaskId + 1;
         changeSubTasksCount();
@@ -481,126 +396,185 @@ function closeRightColumn(){
 
 /**
  * Used to display the created subTask and excisting subTasks of the task
+ * 
+ * @param {Object} subTask - Subtask to be displayed to the client
  */
 function createSubTask(subTask){
-    if(subTask.status === true) {
-        var iconName = document.createTextNode("radio_button_unchecked");
-    } else {
-        var iconName = document.createTextNode("check_circle_outline");
-    }
-    var icon = document.createElement("I");
-    icon.className = "material-icons";
-    icon.id = "sub-task-icon" + subTask.serialNumber;
-    icon.appendChild(iconName);
-    
-    var taskIcon = document.createElement("DIV");
-    taskIcon.className="task-icon";
-    taskIcon.appendChild(icon);
-    
-    var taskName = document.createElement("INPUT");
+    var iconName = (subTask.status) ? "radio_button_unchecked" : "check_circle_outline";
+    var icon = createElement("I", "material-icons", "sub-task-icon" + subTask.serialNumber);
+    writeInnerHTML(icon, iconName);
+    var taskIcon = createElement("DIV", "task-icon");
+    appendChild(taskIcon, icon);
+    var taskName = createElement("INPUT", "", "sub-task" + subTask.serialNumber);
     taskName.value = subTask.name;
-    taskName.id = "sub-task" + subTask.serialNumber;
     taskName.readOnly = true;
-    
-    if(subTask.status === true){
-        taskName.style.textDecoration = "none";
+    if(subTask.status){
+        taskName.classList.remove("line-through");
     } else {
-        taskName.style.textDecoration = "line-through";
+        taskName.classList.add("line-through");
     }
-    
-    var taskInput = document.createElement("DIV");
-    taskInput.className="task-input";
-    taskInput.appendChild(taskName);
-
-    var dltIconName = document.createTextNode("clear");
-    var dltIcon = document.createElement("I");
-    dltIcon.className = "material-icons";
-    dltIcon.id = "sub-task-dlt-icon" + subTask.serialNumber;
-    dltIcon.appendChild(dltIconName);
-
-    var deleteDiv = document.createElement("DIV");
-    deleteDiv.className="task-delete";
-    deleteDiv.appendChild(dltIcon);
-    deleteDiv.style.display = "none";
-    
-    var taskContainer = document.createElement("DIV");
-    taskContainer.className = "subTask";
-    taskContainer.appendChild(taskIcon);
-    taskContainer.appendChild(taskInput);
-    taskContainer.appendChild(deleteDiv);
-    
-    subTasksContainer.appendChild(taskContainer);
-    icon.addEventListener("click", manageSubTask.bind(subTask));
-    taskContainer.addEventListener("mouseover", function(){
-        deleteDiv.style.display = "block";
+    var taskInput = createElement("DIV", "task-input");
+    appendChild(taskInput, taskName);
+    var dltIcon = createElement("I", "material-icons", "sub-task-dlt-icon" + subTask.serialNumber);
+    writeInnerHTML(dltIcon, "clear");
+    var deleteDiv = createElement("DIV", "task-delete");
+    appendChild(deleteDiv, dltIcon);
+    deleteDiv.classList.add("delete-task");
+    var taskContainer = createElement("DIV", "subTask");
+    appendChild(taskContainer, taskIcon);
+    appendChild(taskContainer, taskInput);
+    appendChild(taskContainer, deleteDiv);
+    appendChild(subTasksContainer, taskContainer);
+    bindEventListener(icon, "click", manageSubTask, subTask);
+    addEventListener(taskContainer, "mouseover", function(){
+        deleteDiv.classList.remove("delete-task");
     });
-    taskContainer.addEventListener("mouseout", function(){
-        deleteDiv.style.display = "none";
+    addEventListener(taskContainer, "mouseout", function(){
+        deleteDiv.classList.add("delete-task");
     });
-    dltIcon.addEventListener("click", getConfirmation.bind(subTask));
+    bindEventListener(dltIcon, "click", getConfirmation, subTask);
 }
 
-/*function confirmDeletion() {
-    var cnfrmMsg = document.createElement("span");
-    cnfrmMsg.textContent = "Do you want to delete?"
-    var msg = document.createElement("span");
-    msg.textContent = "you won't be able to undo this action"
-    var cancelBtn = document.createElement("button");
-    cancelBtn.className = "cancelBtn";
-    cancelBtn.textContent = "Cancel";
-    var deleteBtn = document.createElement("button");
-    deleteBtn.className = "deleteBtn";
-    deleteBtn.textContent = "Delete";
-    var popUpInnerDiv = document.createElement("div");
-    popUpInnerDiv.id = "popUpInnerId";
-    popUpInnerDiv.className = "popUpInner";
-    popUpInnerDiv.appendChild(cnfrmMsg);
-    popUpInnerDiv.appendChild(msg);
-    popUpInnerDiv.appendChild(cancelBtn);
-    popUpInnerDiv.appendChild(deleteBtn);
-    var popUpDiv = document.createElement("div");
-    popUpDiv.id = "popUpId";
-    popUpDiv.className = "popUp";
-    popUpDiv.appendChild(popUpInnerDiv);
-    body.appendChild(popUpDiv);
-    
-}*/
-function getConfirmation(){
-    currentSubTaskId = this.id;
-    popUp.style.display = "block";
+/**
+ * Used to count array by name
+ * 
+ * @param{String} name - Name of the list
+ */
+function getListsCountByName(name){
+    return lists.filter(list => list.originalName === name).length;
 }
-var deleteBtn = document.getElementsByClassName("deleteBtn")[0];
-var cancelBtn = document.getElementsByClassName("cancelBtn")[0];
-deleteBtn.addEventListener("click", deleteSubTask);
-cancelBtn.addEventListener("click", function(){
-    popUp.style.display = "none";
-});
-function deleteSubTask() {
-    var task = (defaultTaskList.name === "active")
-            ? defaultTasks.tasks[currentTaskId]
-            : lists[currentListId].tasks[currentTaskId];
-    task.subTasks[currentSubTaskId].isDeleted = true;
-    changeSubTasksCount();
-    subTasksContainer.innerHTML = "";
-    for (subTask of task.subTasks) {
-        if(!subTask.isDeleted)
-            createSubTask(subTask);
+
+/**
+ * Used to change the status of the tasks
+ */
+function manageTask(){
+    var iconName = (this.status) ? "check_circle_outline": "radio_button_unchecked";
+    var text = getElementById("task" + this.serialNumber);
+    var icon = getElementById("task-icon" + this.serialNumber);
+    writeInnerHTML(icon, iconName);
+    writeInnerHTML(rightSideTaskIcon, iconName);
+    if(this.status) {
+        this.status = false;
+        text.classList.add("line-through");
+        if(this.name === rightSideTaskInput.value)
+            rightSideTaskInput.classList.add("line-through");
+    } else {
+        this.status = true;
+        text.classList.remove("line-through");
+        if(this.name === rightSideTaskInput.value)
+            rightSideTaskInput.classList.remove("line-through");
     }
-    popUp.style.display = "none";
+    changeTasksCount();
 }
 
 /**
  * Used to change the status of the subTasks
  */
 function manageSubTask(){
-    if(this.status === true) {
+    var iconName = (this.status) ? "check_circle_outline": "radio_button_unchecked";
+    var text = getElementById("sub-task" + this.serialNumber);
+    writeInnerHTML(getElementById("sub-task-icon" + this.serialNumber), iconName);
+    if(this.status) {
         this.status = false;
-        document.getElementById("sub-task" + this.serialNumber).style.textDecoration = "line-through";
-        document.getElementById("sub-task-icon" + this.serialNumber).innerHTML = "check_circle_outline";
+        text.classList.add("line-through");
     } else {
         this.status = true;
-        document.getElementById("sub-task" + this.serialNumber).style.textDecoration = "none";
-        document.getElementById("sub-task-icon" + this.serialNumber).innerHTML = "radio_button_unchecked";
+        text.classList.remove("line-through");
     }
     changeSubTasksCount();
 }
+
+/**
+ * Used to display status of subTasks
+ */
+function changeTasksCount(){
+    if(defaultTaskList.name === "inActive") {
+        var list = lists[currentListId];
+        writeInnerHTML(getElementById("task-count-span" + list.id),
+                getArrayCountByStatus(list.tasks, false) + " of " + list.tasks.length);
+    }
+}
+
+/**
+ * Used to count of array by status
+ * 
+ * @param{Array} array - Array which is to be counted after filtering
+ */
+function getUndeletedArrayCount(array){
+    return array.filter(element => element.isDeleted === false).length;
+}
+
+/**
+ * Adds notes for a task
+ */
+function addNotes(){
+    var task = (defaultTaskList.name === "active")
+            ? defaultTasks.tasks[currentTaskId]
+            : lists[currentListId].tasks[currentTaskId];
+    task.notes = notes.textContent;
+    createNotesContainer(getElementById("notes" + task.serialNumber));
+}
+/**
+ * Displays notes icon under the task
+ * 
+ * @param {Object} notesContainer
+ */
+function createNotesContainer(notesContainer) {
+    writeInnerHTML(notesContainer, "");
+    var dot = createElement("i", "material-icons dot");
+    writeInnerHTML(dot, "lens");
+    appendChild(notesContainer, dot);
+    var icon = createElement("i", "material-icons notes-icon");
+    writeInnerHTML(icon, "description");
+    appendChild(notesContainer, icon);
+    var lable = document.createTextNode("Notes");
+    appendChild(notesContainer, lable);
+}
+
+/**
+ * Used to display status of subTasks
+ */
+function changeSubTasksCount(){
+    var task = (defaultTaskList.name === "active")
+            ? defaultTasks.tasks[currentTaskId]
+            : lists[currentListId].tasks[currentTaskId];
+    writeInnerHTML(document.getElementById("sub-task-length" + task.serialNumber),
+            getArrayCountByStatus(task.subTasks, false) + " of " + getUndeletedArrayCount(task.subTasks));
+}
+
+/**
+ * Used to display popUp confirmation
+ */
+function getConfirmation(){
+    currentSubTaskId = this.id;
+    popUp.classList.add("display");
+}
+
+/**
+ * Used to delete the sub-task
+ */
+function deleteSubTask() {
+    var task = (defaultTaskList.name === "active")
+            ? defaultTasks.tasks[currentTaskId]
+            : lists[currentListId].tasks[currentTaskId];
+    task.subTasks[currentSubTaskId].isDeleted = true;
+    changeSubTasksCount();
+    writeInnerHTML(subTasksContainer, "");
+    for (subTask of task.subTasks) {
+        if(!subTask.isDeleted)
+            createSubTask(subTask);
+    }
+    popUp.classList.remove("display");
+}
+/*
+function getContextMenu(event) {
+    console.log("inside context menu");
+    var menu = document.createElement("menu");
+    menu.type = "context";
+    menu.id = "mymenu";
+    var menuitem = document.createElement("menuitem");
+    menuitem.label = "Delete task";
+    menu.appendChild(menuitem);
+    this.appendChild(menu);
+    event.preventDefault();
+}*/
