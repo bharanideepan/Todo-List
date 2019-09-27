@@ -127,8 +127,7 @@
                         </div>-->
                     </div>
                     <div class="right-column" id="rightColumn">
-                        <div class="right steps">
-                            <div class="inner tasks-bar">
+                            <div class="inner tasks-bar right">
                                 <div class="task-icon">
                                     <i id="tasksIcon-right" class="material-icons">radio_button_unchecked</i>
                                 </div>
@@ -136,6 +135,8 @@
                                     <input id="tasksInput-right" type="text" readonly/>
                                 </div>
                             </div>
+                            <div class="right-scroll">
+                                <div class="right steps">
                             <div id="subTasks" class="inner">
                                 <!--<div class="subTask">
                                     <div class="task-icon">
@@ -164,7 +165,7 @@
                                         wb_sunny
                                     </i>
                                 </span>
-                                <span>Add to My Day</span>
+                                <span class="right-inner-text">Add to My Day</span>
                             </div>
                         </div>
                         <div class="right options">
@@ -174,7 +175,7 @@
                                         access_alarm
                                     </i>
                                 </span>
-                                <span>Remind me</span>
+                                <span class="right-inner-text">Remind me</span>
                             </div>
                             <div class="inner">
                                 <span>
@@ -182,7 +183,7 @@
                                         today
                                     </i>
                                 </span>
-                                <span>Add due date</span>
+                                <span class="right-inner-text">Add due date</span>
                             </div>
                             <div class="inner">
                                 <span>
@@ -190,7 +191,7 @@
                                         repeat
                                     </i>
                                 </span>
-                                <span>Repeat</span>
+                                <span class="right-inner-text">Repeat</span>
                             </div>
                         </div>
                         <div class="right add-files">
@@ -200,7 +201,7 @@
                                         attach_file
                                     </i>
                                 </span>
-                                <span>Add file</span>
+                                <span class="right-inner-text">Add file</span>
                             </div>
                         </div>
                         <div class="right notes">
@@ -208,8 +209,9 @@
                                 <span contentEditable="true" id="add-notes"></span>
                             </div>
                         </div>
-                        <div class="right footer">
-                            <div class="inner">
+                        </div>
+                        <div class="footer">
+                            <div class="footer-close-btn">
                                 <i id="close-right-column" class="material-icons">arrow_forward</i>
                             </div>
                         </div>
@@ -218,15 +220,6 @@
             </div>
             <div id="popUpId" class="popUp">
                 <div id="popUpInnerId" class="popUpInner">
-                    <span>You won't be able to undo this action!</span>
-                    <div class="btns">
-                            <button class="cancelBtn">Cancel</button>
-                            <button class="deleteBtn">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div id="popUpId1" class="popUp">
-                <div id="popUpInnerId1" class="popUpInner" style="background-color: blueviolet">
                     <span>You won't be able to undo this action!</span>
                     <div class="btns">
                             <button class="cancelBtn">Cancel</button>

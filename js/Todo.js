@@ -1,41 +1,36 @@
+"use strict";
+
+    var defaultTasks = {};
+    defaultTasks.name = "Tasks";
+    defaultTasks.tasks = [];
+    var lists = [];
+    var listId = 0;
+    var currentListId = 0;
+    var taskId = 0;
+    var currentTaskId = 0;
+    var subTaskId = 0;
+    var currentSubTaskId = 0;
+
+    var defaultTaskList = getElementById("default-task");
+    defaultTaskList.name = "active";
+    var newListInput = getElementById("addList-input");
+    var listsMenu = getElementById("listsMenu");
+    var listTitle = getElementById("list-title");
+    var newTaskInput = getElementById("newTask-input");
+    var tasksContainer = getElementById("tasks");
+    var subTasksContainer = getElementById("subTasks");
+    var rightSideTaskInput = getElementById("tasksInput-right");
+    var rightColumn = getElementById("rightColumn");
+    var newSubTaskInput = getElementById("newSubTask-input");
+    var notes = getElementById("add-notes");
+    var rightSideTaskIcon = getElementById("tasksIcon-right");
+    var popUp = getElementById("popUpId");
+    var notesContainer = getElementsByClassName("notes");
 
 init();
 
 function init(){
-    declareGlobalVariables();
     initializeEventListeners();
-}
-
-/**
- * Global variables which are used to store lists
- * And track number of lists and tasks added
- */
-function declareGlobalVariables(){
-    defaultTasks = {};
-    defaultTasks.name = "Tasks";
-    defaultTasks.tasks = [];
-    lists = [];
-    listId = 0;
-    currentListId = 0;
-    taskId = 0;
-    currentTaskId = 0;
-    subTaskId = 0;
-    currentSubTaskId = 0;
-
-    defaultTaskList = getElementById("default-task");
-    defaultTaskList.name = "active";
-    newListInput = getElementById("addList-input");
-    listsMenu = getElementById("listsMenu");
-    listTitle = getElementById("list-title");
-    newTaskInput = getElementById("newTask-input");
-    tasksContainer = getElementById("tasks");
-    subTasksContainer = getElementById("subTasks");
-    rightSideTaskInput = getElementById("tasksInput-right");
-    rightColumn = getElementById("rightColumn");
-    newSubTaskInput = getElementById("newSubTask-input");
-    notes = getElementById("add-notes");
-    rightSideTaskIcon = getElementById("tasksIcon-right");
-    popUp = getElementById("popUpId");
 }
 
 /**
@@ -51,6 +46,12 @@ function initializeEventListeners(){
     });
     addEventListener(newSubTaskInput, "keyup", addSubTask);
     addEventListener(notes, "blur", addNotes);
+    addEventListener(notesContainer[0], "mouseover", function(){
+        notesContainer[0].classList.add("thick-border");
+    });
+    addEventListener(notesContainer[0], "mouseout", function(){
+        notesContainer[0].classList.remove("thick-border");
+    });
     addEventListener(getElementsByClassName("deleteBtn")[0], "click", deleteSubTask);
     addEventListener(getElementsByClassName("cancelBtn")[0], "click", function (){
         popUp.classList.remove("display");
@@ -137,10 +138,9 @@ function appendChild(parentElement, childElement){
  */
 function openMenu() {
     var itemDescriptions = getElementsByClassName("item-description");
-    for(itemDescription of itemDescriptions){
+    for(var itemDescription of itemDescriptions){
         itemDescription.classList.toggle("display");
     }
-    getElementById("nav-bar").classList.toggle("nav-bar-open");
 }
 
 /**
@@ -159,11 +159,23 @@ function addList(event) {
         list.name = getListName(list.originalName);
         list.tasks = [];
         list.id = lists.length;
+
+        var a = pushList(list);
+        console.log(a);
+
         lists.push(list);
         currentListId = list.id;
         createList(list);
     }
 }
+
+var pushList = (function (){
+    var listss = [];
+    return function(list) {
+        listss.push(list);
+        return listss;
+    }
+})();
 
 /**
  * Checks whether the name is already present
@@ -230,7 +242,7 @@ function getList(){
     currentListId = this.id;
     writeInnerHTML(tasksContainer, "");
     listTitle.value = this.name;
-    for (task of this.tasks) {
+    for (var task of this.tasks) {
         createTask(task);
     }
 }
@@ -245,11 +257,11 @@ function getDefaultTasks(){
         tasksContainer.classList.remove("tasks-height");
     }
     defaultTaskList.name = "active";
-    defaultTaskList.classList.remove("grey-color");
+    defaultTaskList.classList.remove("gray-color");
     rightColumn.classList.remove("display");
     writeInnerHTML(tasksContainer, "");
     listTitle.value = this.name;
-    for (task of this.tasks) {
+    for (var task of this.tasks) {
         createTask(task);
     }
 }
@@ -339,6 +351,12 @@ function createTask(task){
     appendChild(tasksContainer, taskContainer);
     bindEventListener(icon, "click", manageTask, task);
     bindEventListener(taskInput, "click", getTask, task);
+    addEventListener(taskContainer, "mouseover", function(){
+        taskContainer.classList.add("no-border");
+    });
+    addEventListener(taskContainer, "mouseout", function(){
+        taskContainer.classList.remove("no-border");
+    });
     //bindEventListener(taskContainer, "contextmenu", getContextMenu, taskContainer);
 }
 
@@ -346,11 +364,6 @@ function createTask(task){
  * Gets the task along with its subTasks
  */
 function getTask(){
-    if(this.subTasks.length > 1){
-        subTasksContainer.classList.add("sub-tasks-height");
-    } else {
-        subTasksContainer.classList.remove("sub-tasks-height");
-    }
     currentTaskId = this.id;
     rightColumn.classList.add("display");
     rightSideTaskInput.value = this.name;
@@ -363,7 +376,7 @@ function getTask(){
     }
     writeInnerHTML(notes, this.notes);
     writeInnerHTML(subTasksContainer, "");
-    for (subTask of this.subTasks) {
+    for (var subTask of this.subTasks) {
         if(!subTask.isDeleted)
             createSubTask(subTask);
     }
@@ -386,9 +399,6 @@ function getTask(){
         subTask.id = list.tasks[currentTaskId].subTasks.length;
         createSubTask(subTask);
         list.tasks[currentTaskId].subTasks.push(subTask);
-        if(list.tasks[currentTaskId].subTasks.length > 1){
-            subTasksContainer.classList.add("sub-tasks-height");
-        }
         subTaskId = subTaskId + 1;
         changeSubTasksCount();
     }
@@ -560,7 +570,7 @@ function deleteSubTask() {
     task.subTasks[currentSubTaskId].isDeleted = true;
     changeSubTasksCount();
     writeInnerHTML(subTasksContainer, "");
-    for (subTask of task.subTasks) {
+    for (var subTask of task.subTasks) {
         if(!subTask.isDeleted)
             createSubTask(subTask);
     }

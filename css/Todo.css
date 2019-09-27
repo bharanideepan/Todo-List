@@ -34,11 +34,12 @@
 }
 .nav-left{
     background-color:#f4f4f4;
-    width: 55px;
+    /* width: 55px; */
     height:37rem;
     border-right: 1px solid #ededed;
-    display:inline-block;
-    transition: 0.01s;
+    /* display: inline-block; */
+    /* transition: 0.01s; */
+    float: left;
 }
 .nav-header{
     margin-top: 20px;
@@ -63,10 +64,12 @@
 }
 .nav-content li{
     display:flex;
+    margin-right: 17px;
 }
 .nav-item{
     padding-top: 11px;
     color: #595b5f;
+    cursor: pointer;
 }
 .material-icons{
     font-size:20px;
@@ -75,6 +78,11 @@
     display: flex;
     color: #117AD8;
     padding-top: 25px;
+    cursor: pointer;
+    border-bottom: 1px solid #d0cdcd;
+}
+.no-border {
+    border-bottom:  1px solid #ffffff;
 }
 .new-task {
     display: flex;
@@ -83,9 +91,11 @@
 }
 .item-description{
     margin-top: 1px;
+    margin-right: 117px;
     padding-left: 15px;
     font-size: 15px;
     display:none;
+    width: 110px;
 }
 .item-description span{
     max-width:200px;
@@ -116,14 +126,20 @@
 }
 .add-list-input input::-webkit-input-placeholder {
   color: #117AD8;
-  opacity: 1;
+  opacity: 0.7;
     font-size: 15px;
 }
 .body{
-    display:flex;
+    display: flex;
+}
+.body i{
+    cursor: pointer;
 }
 .center-column{
-    width:1040px;
+    width: 100%;
+    /* border: 1px solid; */
+    /* display: inline-block; */
+    float: left;
 }
 .center{
     padding: 24px 0 0 34px;
@@ -136,6 +152,7 @@
     color: #117AD8;
     outline:none;
     color: #117AD8;
+    cursor: pointer;
 }
 .center.tool-bar button{
     margin-left: 9px;
@@ -158,18 +175,27 @@
     width:95%;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+}
+#newTask-input{
+    cursor: text;
+}
+#newSubTask-input{
+    cursor: text;
 }
 .task-input input{
     width: 90%;
     padding: 7px 0 5px 25px;
     border: none;
     outline: none;
-    color: #117AD8;
+    color: #3f4142;
     font-size: 15px;
+    /* font-weight: bold; */
+    cursor: pointer;
 }
 .task-input input::-webkit-input-placeholder {
    color: #117AD8;
-   opacity: 1;
+   opacity: 0.7;
     font-size: 15px;
 }
 .background-lines{
@@ -181,43 +207,63 @@
     margin-right: 40px;
 }
 .right-column {
-    background-color: #f4f4f4;
+    background-color: #f3f3f3;
     border-left: 1px solid #ededed;
-    width:360px;
+    /* width:360px; */
     color: #595b5f;
     display:none;
+    height: 100%;
+    float: left;
 }
 .right{
     border: 1px solid #ededed;
     background-color: #ffffff;
-    margin:8px;
+    /* margin-left: 7px; */
+    /* margin-top: 7px; */
+    margin: 7px 7px 7px 7px;
+    padding: 7px 7px 7px 7px;
+    width: 340px;
+    font-size: 15px;
+    overflow: auto;
 }
 .new-task-right{
     display:flex;
 }
+input#tasksInput-right {
+    font-weight: bold;
+}
 .inner{
     margin: 5px 5px 0 5px;
     padding: 10px 10px 10px 10px;
+    cursor: pointer;
+    /* border-bottom: 1px solid #e0dcdb; */
 }
 .list-tasks {
     padding: 13px 0 0 0;
 }
 div#tasks {
-    width: 95%;
+    width: 90%;
 }
 .tasks-bar{
     display:flex;
+    /* position: fixed; */
+    background-color: #ffffff;
+    /* top: 48px; */
+    padding-left: 23px;
 }
 .subTask {
     display: flex;
     color: #117AD8;
-    padding-top: 25px;
+    padding-top: 13px;
+    cursor: pointer;
+    padding-left: 0px;
 }
 #tasks{
     overFlow:auto;
 }
 #subTasks{
     overFlow:auto;
+    /* margin-top: 0; */
 }
 #listsMenu{
     overFlow:auto;
@@ -240,6 +286,8 @@ div#tasks {
 #add-notes[contenteditable] {
     display: inline-block;
     outline: none;
+    cursor: text;
+    width: 100%;
 }
 #add-notes[contenteditable]:empty::before {
     content: 'Add notes';
@@ -325,9 +373,27 @@ i.material-icons.notes-icon {
 .task-height {
     height: 5px;
 }
-.sub-tasks-height {
-    height: 80px;
-}
 .delete-task{
     display: none;
+}
+.footer {
+    margin-left: 0;
+    padding: 10px;
+    background-color: #ffffff;
+    width: 100%;
+    border: 1px solid #ededed;
+}
+.right-scroll {
+    height: 500px;
+    overflow: auto;
+}
+.inner i {
+    font-size: 18px;
+}
+span.right-inner-text {
+    padding-left: 20px;
+    opacity: 0.9;
+}
+.thick-border{
+    border-color: #d1d4d6;
 }
