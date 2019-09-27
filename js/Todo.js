@@ -548,8 +548,10 @@ function changeSubTasksCount(){
     var task = (defaultTaskList.name === "active")
             ? defaultTasks.tasks[currentTaskId]
             : lists[currentListId].tasks[currentTaskId];
-    writeInnerHTML(document.getElementById("sub-task-length" + task.serialNumber),
-            getArrayCountByStatus(task.subTasks, false) + " of " + getUndeletedArrayCount(task.subTasks));
+    var text = (getUndeletedArrayCount(task.subTasks))
+            ? getArrayCountByStatus(task.subTasks, false) + " of " + getUndeletedArrayCount(task.subTasks)
+            : "";
+    writeInnerHTML(document.getElementById("sub-task-length" + task.serialNumber), text);
 }
 
 /**
