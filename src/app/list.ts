@@ -1,13 +1,14 @@
+import { lists } from './lists';
+
 export class List {
     id: Number;
     name: String;
-    tasks: [];
+    tasks: [] = [];
     enteredName: String;
 
-    constructor(id: Number, name: String, tasks: []){
-        this.id = id;
+    constructor(name: String){
+        this.id = lists.length;
         this.name = this.getName(name);
-        this.tasks = tasks;
         this.enteredName = name;
     }
 

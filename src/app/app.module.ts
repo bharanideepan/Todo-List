@@ -8,6 +8,7 @@ import { CenterComponent } from './center/center.component';
 import { RightComponent } from './right/right.component';
 import { BodyComponent } from './body/body.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { ContextMenuComponent } from './context-menu/context-menu.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TopBarComponent } from './top-bar/top-bar.component';
     CenterComponent,
     RightComponent,
     BodyComponent,
-    TopBarComponent
+    TopBarComponent,
+    ContextMenuComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

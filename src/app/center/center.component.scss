@@ -65,3 +65,13 @@
       color: #117AD8;
       padding-top: 25px;
   }
+  .task {
+    display: flex;
+    color: #117AD8;
+    padding-top: 25px;
+    cursor: pointer;
+    border-bottom: 1px solid #d0cdcd;
+}
+.line-through {
+  text-decoration: line-through;
+}

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { List } from '../list';
+import { lists } from '../lists';
+import { defaultList } from '../lists';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,9 +9,10 @@ import { List } from '../list';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  status : boolean = false;
-
-  constructor() { }
+  status : boolean = true;
+  lists : Object = lists;
+  list : Object = defaultList;
+  defaultList : Object = defaultList;
 
   ngOnInit() {
   }
@@ -17,9 +20,16 @@ export class NavBarComponent implements OnInit {
   toggleMenu(){
     this.status = !this.status;
   }
-  addList(name : String) {
-    const list = new List(1, name, []);
-    console.log(list.name);
+
+  addList(addListInput) {
+    var newList = new List(addListInput.value);
+    lists.push(newList);
+    this.setList(newList);
+    addListInput.value = "";
+  }
+
+  setList(list) {
+    this.list = list;
   }
 
 }

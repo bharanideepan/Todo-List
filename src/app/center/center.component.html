@@ -1,18 +1,27 @@
 
 <div class="center-column">
         <div class="center tool-bar">
-            <input id="list-title" value="Tasks" readonly>
+            <input #listTitle value="{{list.name}}" (keyup.enter) = updateListName(listTitle)
+                (blur) = updateList(listTitle)>
             <!--<button><i class="material-icons" >more_horiz</i></button>-->
         </div>
         <div id="tasks" class="center">
-            <!--<div class="task" id="idTask">
-                <div class="task-icon">
-                    <i class="material-icons">radio_button_unchecked</i>
+
+            <div *ngFor="let task of list.tasks" class="task" id="idTask">
+                <div class="task-icon" (click)=updateTask(task)>
+                    <i class="material-icons" *ngIf="task.status">
+                        radio_button_unchecked
+                    </i>
+                    <i class="material-icons" *ngIf="!task.status">
+                        check_circle_outline
+                    </i>
                 </div>
-                <div class="task-input">
-                    <input id="TasksInput" type="text" value="dzfhsgfhn"/>
+                <div [ngClass] = "{'task-input' : true, 'line-through' : !task.status}"
+                    (click) = "setTask(task)">
+                    <input id="TasksInput" type="text" value="{{task.name}}" readonly/>
                 </div>
-            </div>-->
+            </div>
+
         </div>
         <div class="center new-task">
             <div class="task-icon">
@@ -21,9 +30,11 @@
                 </label>
             </div>
             <div class="task-input">
-                <input id="newTask-input" type="text" placeHolder="Add task"/>
+                <input #newTaskInput type="text" placeHolder="Add task"
+                    (keyup.enter) = addTask(newTaskInput)/>
             </div>
         </div>
         <!--<div class="center background-lines">
         </div>-->
     </div>
+    <app-right [task] = "task"></app-right>

@@ -1,10 +1,18 @@
+$show: block;
+$hide: none;
 
+.show{
+  display: $show;
+}
+.hide{
+  display: $hide;
+}
 .right-column {
     background-color: #f3f3f3;
     border-left: 1px solid #ededed;
     /* width:360px; */
     color: #595b5f;
-    display:none;
+    //display:none;
     height: 100%;
     float: right;
   }
@@ -22,7 +30,7 @@
   .new-task-right{
     display:flex;
   }
-  input#tasksInput-right {
+  input#taskTitle {
     font-weight: bold;
   }
   .inner{

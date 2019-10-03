@@ -12,7 +12,7 @@
                         <div class="item-icon">
                             <i class="material-icons">wb_sunny</i>
                         </div>
-                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                        <div [ngClass]="{'item-description' : true, 'hide' : status}">
                             <span>My Day</span>
                         </div>
                     </li>
@@ -22,7 +22,7 @@
                         <div class="item-icon">
                             <i class="material-icons">star_border</i>
                         </div>
-                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                        <div [ngClass]="{'item-description' : true, 'hide' : status}">
                             <span>Important</span>
                         </div>
                     </li>
@@ -32,7 +32,7 @@
                         <div class="item-icon">
                             <i class="material-icons">date_range</i>
                         </div>
-                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                        <div [ngClass]="{'item-description' : true, 'hide' : status}">
                             <span>Planned</span>
                         </div>
                     </li>
@@ -42,35 +42,36 @@
                         <div class="item-icon green">
                             <i class="material-icons">person_outline</i>
                         </div>
-                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                        <div [ngClass]="{'item-description' : true, 'hide' : status}">
                             <span>Assigned To Me</span>
                         </div>
                     </li>
                 </div>
                 <div class="nav-item tasks">
-                    <li id="default-task" class="default-task-li">
+                    <li id="default-task" class="default-task-li" (click) = setList(defaultList)>
                         <div class="item-icon">
                             <i class="material-icons">home</i>
                         </div>
-                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
-                            <span>Tasks</span>
+                        <div [ngClass]="{'item-description' : true, 'hide' : status}">
+                            <span>{{defaultList.name}}</span>
                         </div>
                     </li>
                 </div>
                 <div class="nav-item empty">
                 </div>
                 <div id="listsMenu" class="nav-item lists">
-                    <!--<li>
+
+                    <li *ngFor="let list of lists" (click) = setList(list)>
                         <div class="item-icon">
                             <i class="material-icons">list</i>
                         </div>
                         <div class="item-description">
                             <div class="item-desc-sub">
-                                <span id="list-name">abc</span>
-                                <span id="task-count0" class="task-count">abc</span>
+                                <span>{{list.name}}</span>
                             </div>
                         </div>
-                    </li>-->
+                    </li>
+
                 </div>
             </ul>
             <div class="add-list">
@@ -79,10 +80,11 @@
                         <i id="add-btn" class="material-icons" value="close">add</i>
                     </label>
                 </div>
-                <div class="item-description add-list-input" [ngClass]="status ? 'show' : 'hide'">
+                <div [ngClass]="{'item-description' : true, 'add-list-input' : true, 'hide' : status}">
                     <input #addListInput type="text" maxlength="255" placeholder="New list"
-                        (keyup.enter) = addList(addListInput.value)>
+                        (keyup.enter) = addList(addListInput)>
                 </div>
             </div>
         </div>
     </div>
+    <app-center [list] = "list"></app-center>
