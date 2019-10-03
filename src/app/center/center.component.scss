@@ -1,0 +1,67 @@
+
+.center-column{
+    float: left;
+    height: 37rem;
+  }
+  .center{
+    padding: 24px 0 0 34px;
+    font-size: 19px;
+    color: #117AD8;
+  }
+  .center.tool-bar input{
+    border: none;
+    font-size: 20px;
+    color: #117AD8;
+    outline:none;
+    color: #117AD8;
+    cursor: pointer;
+  }
+  .center.tool-bar button{
+    margin-left: 9px;
+    border: transparent;
+    background: transparent;
+    outline:none;
+  }
+  .center.tool-bar i{
+    font-size: 18px;
+  }
+  .center.task{
+    display:flex;
+    margin-top: -9px;
+  }
+  .task-icon i {
+    margin-top: 4px;
+    color: #117AD8;
+  }
+  .task-input{
+    width:95%;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  #newTask-input{
+    cursor: text;
+  }
+  #newSubTask-input{
+    cursor: text;
+  }
+  .task-input input{
+    width: 90%;
+    padding: 7px 0 5px 25px;
+    border: none;
+    outline: none;
+    color: #3f4142;
+    font-size: 15px;
+    /* font-weight: bold; */
+    cursor: pointer;
+  }
+  .task-input input::-webkit-input-placeholder {
+   color: #117AD8;
+   opacity: 0.7;
+    font-size: 15px;
+  }
+  .new-task {
+      display: flex;
+      color: #117AD8;
+      padding-top: 25px;
+  }

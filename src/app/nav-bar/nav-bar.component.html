@@ -1,0 +1,88 @@
+
+<div id="nav-bar" class="nav-left">
+        <div class="nav-header">
+            <button id="menu-btn" (click)=toggleMenu()>
+                <i class="material-icons">menu</i>
+            </button>
+        </div>
+        <div class="nav-content">
+            <ul>
+                <div class="nav-item">
+                    <li>
+                        <div class="item-icon">
+                            <i class="material-icons">wb_sunny</i>
+                        </div>
+                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                            <span>My Day</span>
+                        </div>
+                    </li>
+                </div>
+                <div class="nav-item">
+                    <li>
+                        <div class="item-icon">
+                            <i class="material-icons">star_border</i>
+                        </div>
+                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                            <span>Important</span>
+                        </div>
+                    </li>
+                </div>
+                <div class="nav-item">
+                    <li>
+                        <div class="item-icon">
+                            <i class="material-icons">date_range</i>
+                        </div>
+                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                            <span>Planned</span>
+                        </div>
+                    </li>
+                </div>
+                <div class="nav-item">
+                    <li>
+                        <div class="item-icon green">
+                            <i class="material-icons">person_outline</i>
+                        </div>
+                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                            <span>Assigned To Me</span>
+                        </div>
+                    </li>
+                </div>
+                <div class="nav-item tasks">
+                    <li id="default-task" class="default-task-li">
+                        <div class="item-icon">
+                            <i class="material-icons">home</i>
+                        </div>
+                        <div class="item-description" [ngClass]="status ? 'show' : 'hide'">
+                            <span>Tasks</span>
+                        </div>
+                    </li>
+                </div>
+                <div class="nav-item empty">
+                </div>
+                <div id="listsMenu" class="nav-item lists">
+                    <!--<li>
+                        <div class="item-icon">
+                            <i class="material-icons">list</i>
+                        </div>
+                        <div class="item-description">
+                            <div class="item-desc-sub">
+                                <span id="list-name">abc</span>
+                                <span id="task-count0" class="task-count">abc</span>
+                            </div>
+                        </div>
+                    </li>-->
+                </div>
+            </ul>
+            <div class="add-list">
+                <div class="add-list-icon">
+                    <label for="addList-input">
+                        <i id="add-btn" class="material-icons" value="close">add</i>
+                    </label>
+                </div>
+                <div class="item-description add-list-input" [ngClass]="status ? 'show' : 'hide'">
+                    <input #addListInput type="text" maxlength="255" placeholder="New list"
+                        (keyup.enter) = addList(addListInput.value)>
+                </div>
+            </div>
+        </div>
+    </div>

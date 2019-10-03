@@ -1,0 +1,31 @@
+
+.header{
+    padding:0.7%;
+    background-color:#117AD8;
+    color:#ffffff;
+    position:relative;
+}
+.header span{
+  font-weight: bold;
+    margin-left: 1%;
+}
+.header input{
+    border: none;
+    background-color: #CBDBF1;
+    margin-left: 33%;
+    width: 29%;
+    margin-top: 0.2%;
+    padding:0.75%;
+    border-radius: 0.2rem;
+    padding-left:3%;
+}
+.header i{
+    color: #117AD8;
+    position:absolute;
+    right: 60%;
+    top: 30.8%;
+}
+.header input::-webkit-input-placeholder {
+  color: #117AD8;
+  opacity: 1;
+}

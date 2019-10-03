@@ -1,0 +1,90 @@
+
+$show: block;
+$hide: none;
+
+.show{
+  display: $show;
+}
+.hide{
+  display: $hide;
+}
+.nav-left{
+  background-color:#f4f4f4;
+  height:37rem;
+  border-right: 1px solid #ededed;
+  float: left;
+}
+.nav-left i{
+    cursor: pointer;
+}
+.nav-header{
+  margin-top: 20px;
+  padding-left: 12px;
+}
+.nav-header i{
+  color: #117AD8;
+}
+.nav-header button{
+  border: 1px solid #f4f4f4;
+  background: transparent;
+  outline:none;
+}
+.nav-content{
+  margin-top: 10px;
+}
+.nav-content ul{
+  list-style-type: none;
+  margin-block-start: 0.8em;
+  margin-block-end: 0.8em;
+  padding-inline-start: 19px;
+}
+.nav-content li{
+  display:flex;
+  margin-right: 17px;
+}
+.nav-item{
+  padding-top: 11px;
+  color: #595b5f;
+  cursor: pointer;
+}
+.material-icons{
+  font-size:20px;
+}
+.item-description{
+    margin-top: 1px;
+    margin-right: 117px;
+    padding-left: 15px;
+    font-size: 15px;
+    width: 110px;
+}
+.item-description span{
+    max-width:200px;
+    overflow:auto;
+}
+.green{
+    color: #79bd65;
+}
+.lists{
+    color: #117AD8;
+}
+.add-list{
+    display:flex;
+    padding-left: 17px;
+}
+.add-list-icon{
+    color: #117AD8;
+}
+.add-list-input{
+    padding-left: 15px;
+}
+.add-list-input input{
+    border: none;
+    padding-top: 3px;
+    outline:none;
+    background:transparent;
+}
+.add-list-input input::-webkit-input-placeholder {
+  color: #117AD8;
+  opacity: 0.7;
+    font-size: 15px;
+}
