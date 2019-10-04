@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { List } from '../list';
-import { lists } from '../lists';
 import { defaultList } from '../lists';
+import { ListService } from '../list.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,11 +10,34 @@ import { defaultList } from '../lists';
 })
 export class NavBarComponent implements OnInit {
   status : boolean = true;
-  lists : Object = lists;
+  lists : List[]
   selectedList : Object = defaultList;
   defaultList : Object = defaultList;
 
   ngOnInit() {
+    this.getLists();
+  }
+
+  constructor(private listService : ListService) {
+  }
+
+  /**
+   * Gets all lists
+   */
+  getLists(): void {
+    this.lists = this.listService.getLists();
+  }
+
+  /**
+   * Adds new list
+   * 
+   * @param addListInput HTML object
+   */
+  addList(addListInput): void {
+    var newList = new List(addListInput.value);
+    this.listService.addList(newList);
+    this.setList(newList);
+    addListInput.value = "";
   }
 
   /**
@@ -25,23 +48,11 @@ export class NavBarComponent implements OnInit {
   }
 
   /**
-   * Adds a list into the lists
-   * 
-   * @param addListInput HTML object
-   */
-  addList(addListInput) {
-    var newList = new List(addListInput.value);
-    lists.push(newList);
-    this.setList(newList);
-    addListInput.value = "";
-  }
-
-  /**
    * Sets value for list
    * 
    * @param list Object
    */
-  setList(list) {
+  setList(list : Object) {
     this.selectedList = list;
   }
 

@@ -1,9 +1,10 @@
 import { lists } from './lists';
+import { Task } from './task';
 
 export class List {
     id: Number;
     name: String;
-    tasks: [] = [];
+    tasks: Task[] = [];
     enteredName: String;
 
     constructor(name: String){

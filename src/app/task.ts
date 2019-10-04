@@ -1,7 +1,9 @@
+import { SubTask } from './subTask';
+
 export class Task {
     id: Number;
     name: String;
-    subTasks: [] = [];
+    subTasks: SubTask[] = [];
     notes: String;
     status: boolean;
 

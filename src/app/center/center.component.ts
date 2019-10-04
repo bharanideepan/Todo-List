@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Task } from '../task';
+import { List } from '../list';
+import { ListService } from '../list.service';
 
 @Component({
   selector: 'app-center',
@@ -7,10 +9,14 @@ import { Task } from '../task';
   styleUrls: ['./center.component.scss']
 })
 export class CenterComponent implements OnInit {
-  @Input() list;
+  list : Object;
   task : Task;
 
   ngOnInit() {
+    this.list = this.listService.getDefaultList();
+  }
+
+  constructor(private listService : ListService) {
   }
 
   /**

@@ -1,3 +1,5 @@
+import { List } from './list';
+import { Task } from './task';
 
-export const lists = [];
-export const defaultList = {name: "Tasks", tasks: []};
+export const lists : List[] = [];
+export const defaultList : List = {};
