@@ -18,7 +18,7 @@ export class List {
             count = count + 1;
         }
         if(count !== 0) {
-            return name + "(" + (count) + ")";
+            return name + " (" + (count) + ")";
         }
         return name;
     }

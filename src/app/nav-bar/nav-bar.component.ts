@@ -11,7 +11,7 @@ import { defaultList } from '../lists';
 export class NavBarComponent implements OnInit {
   status : boolean = true;
   lists : Object = lists;
-  list : Object = defaultList;
+  selectedList : Object = defaultList;
   defaultList : Object = defaultList;
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class NavBarComponent implements OnInit {
    * @param list Object
    */
   setList(list) {
-    this.list = list;
+    this.selectedList = list;
   }
 
 }

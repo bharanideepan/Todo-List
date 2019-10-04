@@ -1,8 +1,7 @@
 
 <div class="center-column">
         <div class="center tool-bar">
-            <input #listTitle value="{{list.name}}" (keyup.enter) = updateListName(listTitle)
-                (blur) = updateList(listTitle)>
+            <input #listTitle [(ngModel)]="list.name"/>
             <!--<button><i class="material-icons" >more_horiz</i></button>-->
         </div>
         <div id="tasks" class="center">
@@ -37,4 +36,4 @@
         <!--<div class="center background-lines">
         </div>-->
     </div>
-    <app-right [task] = "task"></app-right>
+    <app-right *ngIf="task" [task] = "task"></app-right>

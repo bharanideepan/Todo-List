@@ -48,7 +48,8 @@
                     </li>
                 </div>
                 <div class="nav-item tasks">
-                    <li id="default-task" class="default-task-li" (click) = setList(defaultList)>
+                    <li id="default-task" class="default-task-li" [class.selected]="defaultList === selectedList"
+                        (click) = setList(defaultList)>
                         <div class="item-icon">
                             <i class="material-icons">home</i>
                         </div>
@@ -61,7 +62,8 @@
                 </div>
                 <div id="listsMenu" class="nav-item lists">
 
-                    <li *ngFor="let list of lists" (click) = setList(list)>
+                    <li *ngFor="let list of lists" [class.selected]="list === selectedList"
+                        (click) = setList(list)>
                         <div class="item-icon">
                             <i class="material-icons">list</i>
                         </div>
@@ -87,4 +89,4 @@
             </div>
         </div>
     </div>
-    <app-center [list] = "list"></app-center>
+    <app-center [list] = "selectedList"></app-center>

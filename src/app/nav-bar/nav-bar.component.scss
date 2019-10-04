@@ -42,6 +42,9 @@ $hide: none;
   display:flex;
   margin-right: 17px;
 }
+.nav-content li.selected{
+  color: #117AD8;
+}
 .nav-item{
   padding-top: 11px;
   color: #595b5f;
@@ -63,9 +66,6 @@ $hide: none;
 }
 .green{
     color: #79bd65;
-}
-.lists{
-    color: #117AD8;
 }
 .add-list{
     display:flex;

@@ -8,7 +8,7 @@ import { Task } from '../task';
 })
 export class CenterComponent implements OnInit {
   @Input() list;
-  task = {};
+  task : Task;
 
   ngOnInit() {
   }
@@ -21,7 +21,6 @@ export class CenterComponent implements OnInit {
   addTask(newTaskInput) {
     var newTask = new Task(this.list.tasks.length , newTaskInput.value);
     this.list.tasks.push(newTask);
-    this.setTask(newTask);
     newTaskInput.value = "";
   }
 
@@ -47,8 +46,8 @@ export class CenterComponent implements OnInit {
    * Updates the status of the task
    * 
    * @param task Object
-   */
+   *
   updateTask(task) {
     task.status = !task.status;
-  }
+  }*/
 }
