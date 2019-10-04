@@ -17,10 +17,18 @@ export class NavBarComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Toggle the status between true and false
+   */
   toggleMenu(){
     this.status = !this.status;
   }
 
+  /**
+   * Adds a list into the lists
+   * 
+   * @param addListInput HTML object
+   */
   addList(addListInput) {
     var newList = new List(addListInput.value);
     lists.push(newList);
@@ -28,6 +36,11 @@ export class NavBarComponent implements OnInit {
     addListInput.value = "";
   }
 
+  /**
+   * Sets value for list
+   * 
+   * @param list Object
+   */
   setList(list) {
     this.list = list;
   }

@@ -19,24 +19,48 @@ export class RightComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Adds a new sub task into the task
+   * 
+   * @param newSubTaskInput HTML object
+   */
   addSubTask(newSubTaskInput) {
     var newSubTask = new SubTask(this.task.subTasks.length, newSubTaskInput.value);
     this.task.subTasks.push(newSubTask);
     newSubTaskInput.value = "";
   }
 
-  addNotes(notes) {
+  /**
+   * Adds notes for the task
+   * 
+   * @param notes String
+   */
+  addNotes(notes : String) {
     this.task.notes = notes;
   }
 
+  /**
+   * Updates name of the task
+   * 
+   * @param taskTitle HTML object
+   */
   updateTaskName(taskTitle) {
     this.task.name = taskTitle.value;
   }
 
+  /**
+   * Updates the status of the task
+   */
   updateTask() {
     this.task.status = !this.task.status;
   }
 
+  /**
+   * Updates the name of the sub task
+   * 
+   * @param subTask Object
+   * @param SubTasksInput HTML object
+   */
   updateSubTaskName(subTask, SubTasksInput) {
     subTask.name = SubTasksInput.value;
     setTimeout(() => {
@@ -44,26 +68,47 @@ export class RightComponent implements OnInit {
     }, 200);
   }
 
+  /**
+   * Updates the status of the sub task
+   * 
+   * @param subTask Object
+   */
   updateSubTask(subTask) {
     subTask.status = !subTask.status;
   }
 
-  //activates the menu with the coordinates
+  /**
+   * Activates the menu with the coordinates
+   *  
+   * @param event 
+   * @param subTask 
+   */
   onrightClick(event, subTask) {
     this.contextmenuX = event.clientX
     this.contextmenuY = event.clientY
     this.contextmenu = true;
     this.subTask = subTask;
   }
-  //disables the menu
+  
+  /**
+   * Disables the menu
+   */
   disableContextMenu() {
     this.contextmenu = false;
   }
 
+  /**
+   * Toggles the popup status between true and false
+   */
   togglePopUp(){
     this.popUpStatus = !this.popUpStatus;
   }
 
+  /**
+   * Deletes the subtask from the task
+   * 
+   * @param subTask Object
+   */
   deleteSubTask(subTask){
     this.task.subTasks.splice(this.task.subTasks.indexOf(subTask), 1);
     this.togglePopUp();
