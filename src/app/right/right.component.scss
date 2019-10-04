@@ -229,3 +229,62 @@ $hide: none;
    opacity: 0.7;
     font-size: 15px;
   }
+  .contextmenu{
+    position: absolute;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    font-size: 15px;
+  }
+  .contextmenu i{
+    font-size: 15px;
+  }
+  .contextmenuDesc{
+    padding-left: 5px;
+  }
+  .contextmenu ul{
+    list-style-type: none;
+    margin-block-start: 0.8em;
+    margin-block-end: 0.8em;
+    padding-inline-start: 19px;
+  }
+  .contextmenu li{
+    display:flex;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .popUp {
+      display:block;
+      position: fixed;
+      z-index: 1;
+      padding-top: 200px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+  }
+  .popUpInner {
+      background: white;
+      margin: auto;
+      padding: 15px;
+      border: 1px solid #888;
+      width: 12%;
+      border-radius: 5px;
+  }
+  .btns{
+      margin-top: 25px;
+  }
+  .btns button{
+      border: none;
+      color: #ffffff;
+      padding: 5px;
+  }
+  .deleteBtn {
+      float: right;
+      background-color: #ea3b3b;
+  }
+  .cancelBtn {
+      background-color: #4070e0;
+  }

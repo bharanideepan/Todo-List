@@ -12,7 +12,14 @@ export class List {
         this.enteredName = name;
     }
 
-    getName(name : String){
-        return name + "12345";
+    getName(name) {
+        var count = lists.filter(list => list.enteredName === name).length;
+        if(name === "Tasks") {
+            count = count + 1;
+        }
+        if(count !== 0) {
+            return name + "(" + (count) + ")";
+        }
+        return name;
     }
 }
