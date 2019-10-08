@@ -113,4 +113,8 @@ export class RightComponent implements OnInit {
     this.task.subTasks.splice(this.task.subTasks.indexOf(subTask), 1);
     this.togglePopUp();
   }
+
+  closeInfo(){
+    this.task.taskInfo = false;
+  }
 }

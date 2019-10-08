@@ -22,6 +22,7 @@ export class CenterComponent implements OnInit {
     var newTask = new Task(this.list.tasks.length , newTaskInput.value);
     this.list.tasks.push(newTask);
     newTaskInput.value = "";
+    console.log(this.list.length);
   }
 
   /**
@@ -31,6 +32,7 @@ export class CenterComponent implements OnInit {
    */
   setTask(task) {
     this.task = task;
+    this.task.taskInfo = true;
   }
 
   /**
@@ -46,8 +48,8 @@ export class CenterComponent implements OnInit {
    * Updates the status of the task
    * 
    * @param task Object
-   *
+   */
   updateTask(task) {
     task.status = !task.status;
-  }*/
+  }
 }
