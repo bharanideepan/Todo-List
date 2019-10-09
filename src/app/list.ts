@@ -1,10 +1,12 @@
 import { lists } from './lists';
+import { Task } from './task';
 
 export class List {
     id: Number;
     name: String;
-    tasks: [] = [];
+    tasks: Task[] = [];
     enteredName: String;
+    completedTasksLength: Number;
 
     constructor(name: String){
         this.id = lists.length;

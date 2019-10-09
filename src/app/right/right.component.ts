@@ -25,9 +25,10 @@ export class RightComponent implements OnInit {
    * @param newSubTaskInput HTML object
    */
   addSubTask(newSubTaskInput) {
-    var newSubTask = new SubTask(this.task.subTasks.length, newSubTaskInput.value);
-    this.task.subTasks.push(newSubTask);
-    newSubTaskInput.value = "";
+    if(newSubTaskInput.value !== ""){
+      var newSubTask = new SubTask(this.task.subTasks.length, newSubTaskInput.value);
+      this.task.subTasks.push(newSubTask);
+      newSubTaskInput.value = "";}
   }
 
   /**
@@ -75,6 +76,8 @@ export class RightComponent implements OnInit {
    */
   updateSubTask(subTask) {
     subTask.status = !subTask.status;
+    this.task.completedSubTasksLength =
+        this.task.subTasks.filter(subTask => subTask.status == false).length;
   }
 
   /**
@@ -111,6 +114,8 @@ export class RightComponent implements OnInit {
    */
   deleteSubTask(subTask){
     this.task.subTasks.splice(this.task.subTasks.indexOf(subTask), 1);
+    this.task.completedSubTasksLength =
+        this.task.subTasks.filter(subTask => subTask.status == false).length;
     this.togglePopUp();
   }
 

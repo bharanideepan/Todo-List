@@ -30,10 +30,11 @@ export class NavBarComponent implements OnInit {
    * @param addListInput HTML object
    */
   addList(addListInput) {
-    var newList = new List(addListInput.value);
-    lists.push(newList);
-    this.setList(newList);
-    addListInput.value = "";
+    if(addListInput.value !== ""){
+      var newList = new List(addListInput.value);
+      lists.push(newList);
+      this.setList(newList);
+      addListInput.value = "";}
   }
 
   /**

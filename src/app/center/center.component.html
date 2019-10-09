@@ -4,7 +4,7 @@
             <input #listTitle [(ngModel)]="list.name"/>
             <!--<button><i class="material-icons" >more_horiz</i></button>-->
         </div>
-        <div id="tasks" class="center">
+        <div id="tasks" [ngClass]="{'center' : true, 'tasksOverFlow' : list.tasks.length > 7}">
 
             <div *ngFor="let task of list.tasks" class="task" id="idTask">
                 <div class="task-icon" (click)=updateTask(task)>
@@ -18,6 +18,9 @@
                 <div [ngClass] = "{'task-input' : true, 'line-through' : !task.status}"
                     (click) = "setTask(task)">
                     <input id="TasksInput" type="text" value="{{task.name}}" readonly/>
+                    <div *ngIf="task.subTasks.length != 0" class="taskShortDetails">
+                        <span>{{task.completedSubTasksLength}} of {{task.subTasks.length}}</span>
+                    </div>
                 </div>
             </div>
 
@@ -29,7 +32,7 @@
                 </label>
             </div>
             <div class="task-input">
-                <input #newTaskInput type="text" placeHolder="Add task"
+                <input #newTaskInput id="newTask-input" type="text" placeHolder="Add task"
                     (keyup.enter) = addTask(newTaskInput)/>
             </div>
         </div>

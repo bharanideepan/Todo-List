@@ -6,7 +6,7 @@
             </button>
         </div>
         <div class="nav-content">
-            <ul>
+            <ul [ngClass]="{'listsOverFlow' : lists.length > 12}">
                 <div class="nav-item">
                     <li>
                         <div class="item-icon">
@@ -83,7 +83,7 @@
                     </label>
                 </div>
                 <div [ngClass]="{'item-description' : true, 'add-list-input' : true, 'hide' : status}">
-                    <input #addListInput type="text" maxlength="255" placeholder="New list"
+                    <input id="addList-input" #addListInput type="text" maxlength="255" placeholder="New list"
                         (keyup.enter) = addList(addListInput)>
                 </div>
             </div>

@@ -19,9 +19,10 @@ export class CenterComponent implements OnInit {
    * @param newTaskInput HTML object
    */
   addTask(newTaskInput) {
-    var newTask = new Task(this.list.tasks.length , newTaskInput.value);
-    this.list.tasks.push(newTask);
-    newTaskInput.value = "";
+    if(newTaskInput.value !== ""){
+      var newTask = new Task(this.list.tasks.length , newTaskInput.value);
+      this.list.tasks.push(newTask);
+      newTaskInput.value = "";}
   }
 
   /**

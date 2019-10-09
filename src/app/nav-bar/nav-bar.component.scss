@@ -44,6 +44,7 @@ $hide: none;
 }
 .nav-content li.selected{
   color: #117AD8;
+  font-weight: bold;
 }
 .nav-item{
   padding-top: 11px;
@@ -87,4 +88,8 @@ $hide: none;
   color: #117AD8;
   opacity: 0.7;
     font-size: 15px;
+}
+.listsOverFlow{
+  height:500px;
+  overflow-y: auto;
 }
