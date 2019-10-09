@@ -34,6 +34,9 @@
                                 (blur) = updateSubTaskName(subTask,SubTasksInput)
                                 (keyup.enter) = updateSubTaskName(subTask,SubTasksInput)/>
                         </div>
+                        <div class="clear-icon" (click) = togglePopUp()>
+                            <i class="material-icons">clear</i>
+                        </div>
                     </div>
 
                 </div>
@@ -97,8 +100,9 @@
             </div>
             <div class="right notes">
                 <div class="inner">
-                    <span contentEditable="true" id="add-notes" (blur)="addNotes(this.text)">
-                        {{task.notes}}
+                    <span contentEditable="true" id="add-notes">
+                        <span #taskNotes *ngIf="task.notes">
+                        </span>
                     </span>
                 </div>
             </div>

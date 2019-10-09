@@ -16,6 +16,7 @@ export class RightComponent implements OnInit {
   contextmenuX = 0;
   contextmenuY = 0;
   popUpStatus : boolean = false;
+  showClearIcon : boolean = false;
 
   ngOnInit() {
   }
@@ -37,7 +38,8 @@ export class RightComponent implements OnInit {
    * 
    * @param notes String
    */
-  addNotes(notes : String) {
+  addNotes(notes) {
+    console.log(notes.innerHTML)
     this.task.notes = notes;
   }
 
