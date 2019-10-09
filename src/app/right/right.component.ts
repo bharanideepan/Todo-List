@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubTask } from '../subTask';
+import { importants } from '../lists';
 
 @Component({
   selector: 'app-right',
@@ -121,5 +122,14 @@ export class RightComponent implements OnInit {
 
   closeInfo(){
     this.task.taskInfo = false;
+  }
+
+  markTaskAsImp() {
+    this.task.isImportant = !this.task.isImportant;
+    if(this.task.isImportant) {
+      importants.tasks.push(this.task);
+    } else {
+      importants.tasks.splice(importants.tasks.indexOf(this.task), 1);
+    }
   }
 }

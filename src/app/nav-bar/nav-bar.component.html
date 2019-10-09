@@ -18,7 +18,8 @@
                     </li>
                 </div>
                 <div class="nav-item">
-                    <li>
+                    <li id="imp-task" [class.selected]="importants === selectedList"
+                            (click) = setList(importants)>
                         <div class="item-icon">
                             <i class="material-icons">star_border</i>
                         </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { List } from '../list';
 import { lists } from '../lists';
 import { defaultList } from '../lists';
+import { importants } from '../lists';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,6 +14,7 @@ export class NavBarComponent implements OnInit {
   lists : Object = lists;
   selectedList : Object = defaultList;
   defaultList : Object = defaultList;
+  importants : Object = importants;
 
   ngOnInit() {
   }

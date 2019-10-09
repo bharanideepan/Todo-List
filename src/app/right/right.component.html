@@ -10,6 +10,14 @@
                 <input #taskTitle type="text" value="{{task.name}}"
                     (keyup.enter) = updateTaskName(taskTitle) (blur) = updateTaskName(taskTitle)/>
             </div>
+            <div class="task-icon imp-icon" (click)=markTaskAsImp()>
+                <i class="material-icons" *ngIf="task.isImportant">
+                    star
+                </i>
+                <i class="material-icons" *ngIf="!task.isImportant">
+                    star_border
+                </i>
+            </div>
         </div>
         <div class="right-scroll">
             <div class="right steps">

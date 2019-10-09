@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Task } from '../task';
+import { defaultList } from '../lists'
+import { importants } from '../lists'
 
 @Component({
   selector: 'app-center',
@@ -8,7 +10,7 @@ import { Task } from '../task';
 })
 export class CenterComponent implements OnInit {
   @Input() list;
-  task : Task = new Task(1,"");
+  task : Task = new Task(1,"","");
 
   ngOnInit() {
   }
@@ -20,9 +22,17 @@ export class CenterComponent implements OnInit {
    */
   addTask(newTaskInput) {
     if(newTaskInput.value !== ""){
-      var newTask = new Task(this.list.tasks.length , newTaskInput.value);
-      this.list.tasks.push(newTask);
-      newTaskInput.value = "";}
+      if(this.list.name === "Important"){
+        var newTask = new Task(this.list.tasks.length , newTaskInput.value, defaultList.name);
+        newTask.isImportant = true;
+        defaultList.tasks.push(newTask);
+        importants.tasks.push(newTask);
+      } else {
+        var newTask = new Task(this.list.tasks.length , newTaskInput.value, this.list.name);
+        this.list.tasks.push(newTask);
+      }
+      newTaskInput.value = "";
+    }
   }
 
   /**
