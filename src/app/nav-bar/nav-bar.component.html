@@ -1,7 +1,7 @@
 
 <div id="nav-bar" class="nav-left">
         <div class="nav-header">
-            <button id="menu-btn" (click)=toggleMenu()>
+            <button class="menuBtn" appMenuBtn id="menu-btn" (click)=toggleMenu()>
                 <i class="material-icons">menu</i>
             </button>
         </div>
@@ -68,7 +68,7 @@
                         <div class="item-icon">
                             <i class="material-icons">list</i>
                         </div>
-                        <div class="item-description">
+                        <div [ngClass]="{'item-description' : true, 'hide' : status}">
                             <div class="item-desc-sub">
                                 <span>{{list.name}}</span>
                             </div>

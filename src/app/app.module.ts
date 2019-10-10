@@ -10,6 +10,7 @@ import { RightComponent } from './right/right.component';
 import { BodyComponent } from './body/body.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { MenuBtnDirective } from './menu-btn.directive';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
     RightComponent,
     BodyComponent,
     TopBarComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    MenuBtnDirective
   ],
   providers: [],
   bootstrap: [AppComponent]

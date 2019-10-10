@@ -13,38 +13,43 @@ $hide: none;
   height:37rem;
   border-right: 1px solid #ededed;
   float: left;
-}
-.nav-left i{
+  i{
     cursor: pointer;
+  }
 }
 .nav-header{
   margin-top: 20px;
   padding-left: 12px;
+  i{
+    color: #117AD8;
+  }
 }
-.nav-header i{
-  color: #117AD8;
-}
-.nav-header button{
+.menuBtn{
   border: 1px solid #f4f4f4;
   background: transparent;
   outline:none;
 }
+.menuBtnMouse{
+  border: 1px solid #e6e4e4;
+  background-color: #ffffff;
+  outline:none;
+}
 .nav-content{
   margin-top: 10px;
-}
-.nav-content ul{
-  list-style-type: none;
-  margin-block-start: 0.8em;
-  margin-block-end: 0.8em;
-  padding-inline-start: 19px;
-}
-.nav-content li{
-  display:flex;
-  margin-right: 17px;
-}
-.nav-content li.selected{
-  color: #117AD8;
-  font-weight: bold;
+  ul{
+    list-style-type: none;
+    margin-block-start: 0.8em;
+    margin-block-end: 0.8em;
+    padding-inline-start: 19px;
+  }
+  li{
+    display:flex;
+    margin-right: 17px;
+  }
+  li.selected{
+    color: #117AD8;
+    font-weight: bold;
+  }
 }
 .nav-item{
   padding-top: 11px;
@@ -55,15 +60,13 @@ $hide: none;
   font-size:20px;
 }
 .item-description{
-    margin-top: 1px;
-    margin-right: 117px;
-    padding-left: 15px;
-    font-size: 15px;
-    width: 110px;
-}
-.item-description span{
+  margin: 1px 117px 0 15px;
+  font-size: 15px;
+  width: 110px;
+  span{
     max-width:200px;
     overflow:auto;
+  }
 }
 .green{
     color: #79bd65;
@@ -76,18 +79,18 @@ $hide: none;
     color: #117AD8;
 }
 .add-list-input{
-    padding-left: 15px;
-}
-.add-list-input input{
+  padding-left: 15px;
+  input{
     border: none;
     padding-top: 3px;
     outline:none;
     background:transparent;
-}
-.add-list-input input::-webkit-input-placeholder {
-  color: #117AD8;
-  opacity: 0.7;
-    font-size: 15px;
+    &::-webkit-input-placeholder {
+      color: #117AD8;
+      opacity: 0.7;
+      font-size: 15px;
+    }
+  }
 }
 .listsOverFlow{
   height:500px;

@@ -6,7 +6,7 @@
         </div>
         <div id="tasks" [ngClass]="{'center' : true, 'tasksOverFlow' : list.tasks.length > 7}">
 
-            <div *ngFor="let task of list.tasks" class="task" id="idTask">
+            <div *ngFor="let task of list.tasks" class="new-task task" id="idTask">
                 <div class="task-icon" (click)=updateTask(task)>
                     <i class="material-icons" *ngIf="task.status">
                         radio_button_unchecked
@@ -15,9 +15,9 @@
                         check_circle_outline
                     </i>
                 </div>
-                <div [ngClass] = "{'task-input' : true, 'line-through' : !task.status}"
+                <div [ngClass] = "{'task-input' : true}"
                     (click) = "setTask(task)">
-                    <input id="TasksInput" type="text" value="{{task.name}}" readonly/>
+                    <input [ngClass] = "{'line-through' : !task.status}" id="TasksInput" type="text" value="{{task.name}}" readonly/>
                     <div *ngIf="(task.isImportant && list.name == 'Important')" 
                             class="taskShortDetails">
                         <span>{{task.listName}}  </span>
