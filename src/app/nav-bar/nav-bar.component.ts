@@ -11,18 +11,10 @@ import { importants } from '../lists';
 })
 export class NavBarComponent implements OnInit {
   status : boolean = true;
-  lists : Object = lists;
-
-  a:boolean=false;
-
-  selectedList : Object = defaultList;
-
-
-
-
-  defaultList : Object = defaultList;
-
-  importants : Object = importants;
+  lists : any = lists;
+  selectedList : any = defaultList;
+  defaultList : any = defaultList;
+  importants : any = importants;
 
   ngOnInit() {
   }
