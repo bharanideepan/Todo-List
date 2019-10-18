@@ -1,104 +1,95 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import './App.css'
 import NavBar from './NavBar.js'
 import ListDetails from './ListDetails.js'
 import TaskDetails from './TaskDetails.js'
 
+const defaultList = {
+  name: "Tasks",
+  id: 0,
+  tasks: [],
+  enteredName: "Tasks",
+}
+
 class App extends React.Component{
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isNavBarOpen: false,
       isTaskDetailsOpen: false,
-      lists:[{
-        name: "Tasks",
-        id: 0,
-        tasks: [],
-        enteredName: "Tasks",
-      }],
-      text:'',
-      currentList: {
-        name: "Tasks",
-        id: 0,
-        tasks: [],
-        enteredName: "Tasks",
-      },
+      lists:[defaultList],
+      currentList: defaultList,
       currentTask: {},
-    };
-  }
-
-  getDefaultList = () => {
-      return this.state.lists[0]
+    }
   }
 
   toggleMenu = () => {
-    this.setState(state => ({ isNavBarOpen: !state.isNavBarOpen }));
+    this.setState(state => ({ isNavBarOpen: !state.isNavBarOpen }))
   }
 
   toggleTaskDetails = () => {
-    this.setState(state => ({ isTaskDetailsOpen: !state.isTaskDetailsOpen }));
-  }
-
-  handleChange = (event) => {
-    this.setState({ text: event.target.value });
+    this.setState({ isTaskDetailsOpen: false })
   }
 
   addList = (event) => {
     if(event.key === 'Enter' && event.target.value !== ""){
-      const newList = {
-        name: this.getName(this.state.lists, event.target.value),
-        id: this.state.lists.length,
-        tasks: [],
-        enteredName: event.target.value,
-      };
-      const lists = JSON.parse(JSON.stringify(this.state.lists));
-      lists.push(newList)
       this.setState({
-        lists: lists,
-        text: ''
+        lists: [...this.state.lists, {
+          name: this.getName(event.target.value),
+          id: this.state.lists.length,
+          tasks: [],
+          enteredName: event.target.value,
+        }]
       })
+      event.target.value = ""
     }
   }
-  getName = (lists, name) => {
-      var count = lists.filter(list => list.enteredName === name).length;
-      if(count !== 0) {
-          return name + " (" + (count) + ")";
-      }
-      return name;
+
+  getName = (name) => {
+      var count = this.state.lists.filter(list => list.enteredName === name).length
+      return (count !== 0) ? `${name} (${count})` : name
   }
 
   updateCurrentListName = (event) => {
-      const currentList = Object.assign({}, this.state.currentList)
-      currentList.name = event.target.value
-      this.setState({currentList: currentList})
+      const name = event.target.value
+      this.setState(state=>({currentList: {...state.currentList, name}}))
   }
   updateListName = (event) => {
-      const lists = Object.assign([], this.state.lists)
-      lists[this.state.currentList.id].name = event.target.value
-      this.setState({})
+    const lists = JSON.parse(JSON.stringify(this.state.lists))
+      lists[this.state.currentList.id].name = this.getName(event.target.value)
+      this.setState({lists})
   }
 
   setCurrentList = (list) => {
-      this.setState({currentList: list})
+    const currentList = JSON.parse(JSON.stringify(list))
+      this.setState({currentList})
   }
 
-  setCurrentTask = (task) => {
-      this.setState({currentTask: task})
-      this.toggleTaskDetails()
+  setCurrentTask = (currentTask) => {
+      this.setState({currentTask, isTaskDetailsOpen: true })
   }
 
   addTask = (event) => {
     if(event.key === 'Enter' && event.target.value !== ""){
-      const newTask = {
+      const {lists} = this.state
+      const {currentList} = this.state
+      const updatedLists = JSON.parse(JSON.stringify(lists))
+      updatedLists[currentList.id].tasks.push({
         name: event.target.value,
-        id: this.state.lists[this.state.currentList.id].tasks.length,
+        id: lists[currentList.id].tasks.length,
         subTasks: [],
-      };
-      const lists = Object.assign([], this.state.lists);
-      lists[this.state.currentList.id].tasks.push(newTask);
-      this.setState({lists: lists});
-      event.target.value = "";
+        isCompleted: false,
+      })
+      this.setState({lists: updatedLists})
+      event.target.value = ""
     }
+  }
+
+  toggleTaskStatus = (currentTask) => {
+    const {currentList} = this.state
+    const lists = JSON.parse(JSON.stringify(this.state.lists))
+    lists[currentList.id].tasks[currentTask.id].isCompleted = !currentTask.isCompleted
+    this.setState({lists})
   }
 
   render(){
@@ -106,31 +97,32 @@ class App extends React.Component{
       <div>
         <div className="header">
             <span>To-Do</span>
-            <i className="material-icons">search</i>
-            <input type="text" placeholder="Search"/>
+            <div className="searchBox">
+              <i className="material-icons">search</i>
+              <input type="text" placeholder="Search"/>
+            </div>
         </div>
         <div className="body">
           <NavBar toggleMenu={this.toggleMenu}
-                  isNavBarOpen={this.state.isNavBarOpen}
                   addList={this.addList}
-                  lists={this.state.lists}
-                  text={this.state.text}
-                  handleChange={this.handleChange}
                   setCurrentList={this.setCurrentList}
-                  currentList={this.state.currentList}
-                  ></NavBar>
-            <ListDetails currentList={this.state.currentList}
-                        updateCurrentListName={this.updateCurrentListName}
+                  {...this.state}
+          ></NavBar>
+            <ListDetails updateCurrentListName={this.updateCurrentListName}
                         updateListName={this.updateListName}
                         addTask={this.addTask}
-                        lists={this.state.lists}
-                        setCurrentTask={this.setCurrentTask}></ListDetails>
+                        setCurrentTask={this.setCurrentTask}
+                        toggleTaskStatus={this.toggleTaskStatus}
+                        {...this.state}
+            ></ListDetails>
             {this.state.isTaskDetailsOpen &&
-                <TaskDetails toggleTaskDetails={this.toggleTaskDetails}></TaskDetails>
+                <TaskDetails toggleTaskDetails={this.toggleTaskDetails}
+                              {...this.state}
+                ></TaskDetails>
             }
         </div>
       </div>
     );}
 }
 
-export default App;
+export default App

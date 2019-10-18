@@ -1,8 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-class TaskDetails extends React.Component{
-  render() {
-      const {toggleTaskDetails} = this.props;
+function TaskDetails(props) {
+      const {toggleTaskDetails} = props
     return (
       <div className="right-column" id="rightColumn">
               <div className="inner tasks-bar right">
@@ -97,5 +96,5 @@ class TaskDetails extends React.Component{
       </div>
     )
 }
-}
-export default TaskDetails;
+
+export default TaskDetails

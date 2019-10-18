@@ -1,23 +1,27 @@
-import React from 'react';
+import React from 'react'
 
-class ListDetails extends React.Component{
-    render() {
-        const {currentList} = this.props
-        const {updateCurrentListName} = this.props
-        const {updateListName} = this.props
-        const {addTask} = this.props
-        const {lists} = this.props
-        const {setCurrentTask} = this.props
-      return (
+function ListDetails(props) {
+    const {currentList} = props
+    const {updateCurrentListName} = props
+    const {updateListName} = props
+    const {addTask} = props
+    const {lists} = props
+    const {setCurrentTask} = props
+    const {toggleTaskStatus} = props
+    
+    return (
         <div className="center-column">
             <div className="center tool-bar">
                 <input id="list-title" onChange={updateCurrentListName}
-                        onBlur={updateListName} value={lists[currentList.id].name}/>
+                        onBlur={updateListName} value={currentList.name}/>
                 <button><i className="material-icons" >more_horiz</i></button>
             </div>
             <div id="tasks" className="center">
                 {lists[currentList.id].tasks.map(task => (
-                    <Tasks key={task.id} task={task} setCurrentTask={setCurrentTask}></Tasks>
+                    <Tasks key={task.id} task={task}
+                            setCurrentTask={setCurrentTask}
+                            toggleTaskStatus={toggleTaskStatus}
+                    ></Tasks>
                 ))}
             </div>
             <div className="center new-task">
@@ -32,25 +36,24 @@ class ListDetails extends React.Component{
                 </div>
             </div>
         </div>
-      )
-  }
-  }
-  class Tasks extends React.Component{
-    render(){
-        const {setCurrentTask} = this.props;
-        const {task} = this.props;
-      return (
+    )
+}
+function Tasks(props){
+    const {setCurrentTask} = props
+    const {toggleTaskStatus} = props
+    const {task} = props;
+    const iconName = task.isCompleted ? 'check_circle' : 'radio_button_unchecked'
+    return (
         <div className="task" id="idTask">
             <div className="task-icon">
-                <i className="material-icons">radio_button_unchecked</i>
+                <i className="material-icons" onClick={() => toggleTaskStatus(task)}>{iconName}</i>
             </div>
             <div className="task-input">
                 <input id="TasksInput" type="text" value={task.name}
                     onClick={() => setCurrentTask(task)} readOnly/>
             </div>
         </div>
-      );
-    }
-  }
+    )
+}
 
-  export default ListDetails;
+export default ListDetails

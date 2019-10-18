@@ -1,18 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-class NavBar extends React.Component{
-  render() {
-    const {isNavBarOpen} = this.props;
-    const {lists} = this.props;
-    const {setCurrentList} = this.props;
-    const {addList} = this.props;
-    const {handleChange} = this.props;
-    const {text} = this.props;
+function NavBar(props) {
+    const {isNavBarOpen} = props
+    const {lists} = props
+    const {addList} = props
     return (
       <div id="nav-bar" className="nav-left">
           <div className="nav-header">
               <button id="menu-btn"
-                onClick={this.props.toggleMenu}>
+                onClick={props.toggleMenu}>
                 <i className="material-icons">menu</i>
               </button>
           </div>
@@ -65,7 +61,7 @@ class NavBar extends React.Component{
                   <div id="listsMenu" className="nav-item lists">
                     {lists.map(list => (
                         <Lists key={list.id} status={isNavBarOpen} list={list}
-                            setCurrentList={setCurrentList}></Lists>
+                            {...props}></Lists>
                     ))}
                   </div>
                   <div className="nav-item empty">
@@ -80,32 +76,32 @@ class NavBar extends React.Component{
                   <div className= { isNavBarOpen
                                     ? "item-description add-list-input display"
                                     : "item-description add-list-input"}>
-                      <input id="addList-input" type="text" maxLength="255" placeholder="New list"
-                            onKeyUp={addList} onChange={handleChange} value={text}/>
+                      <input name="name" id="addList-input" type="text" maxLength="255"
+                            placeholder="New list"
+                            onKeyUp={addList}/>
                   </div>
               </div>
             </div>
-         </div>
-        )
-    }
+        </div>
+    )
 }
 
-class Lists extends React.Component{
-  render(){
-      const {list} = this.props;
-      const {status} = this.props;
-      const {setCurrentList} = this.props
+function Lists(props) {
+    const {list} = props
+    const {status} = props
+    const {setCurrentList} = props
+    const displayClass = status ? "display" : ""
+    const grayClass = (props.currentList.id === list.id) ? "" : "gray-color"
     return (
         <li onClick={() => setCurrentList(list)}>
             <div className="item-icon">
                 <i className="material-icons">list</i>
             </div>
-            <div className= {status ? "item-description display" : "item-description"}>
+            <div className= {`item-description ${displayClass} ${grayClass}`}>
                 <span>{list.name}</span>
             </div>
         </li>
-    );
-  }
+    )
 }
 
-export default NavBar;
+export default NavBar
