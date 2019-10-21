@@ -1,8 +1,9 @@
 import React from 'react'
-import './App.css'
+import './style/App.css'
 import NavBar from './NavBar.js'
 import ListDetails from './ListDetails.js'
 import TaskDetails from './TaskDetails.js'
+import {connect} from 'react-redux'
 
 const defaultList = {
   name: "Tasks",
@@ -10,6 +11,14 @@ const defaultList = {
   tasks: [],
   enteredName: "Tasks",
 }
+
+const mapStateToProps = (state) => ({
+  isNavBarOpen: state.isNavBarOpen,
+  isTaskDetailsOpen: state.isTaskDetailsOpen,
+  lists: state.lists,
+  currentList: state.currentList,
+  currentTask: state.currentTask,
+})
 
 class App extends React.Component{
   constructor(props) {
@@ -29,20 +38,6 @@ class App extends React.Component{
 
   toggleTaskDetails = () => {
     this.setState({ isTaskDetailsOpen: false })
-  }
-
-  addList = (event) => {
-    if(event.key === 'Enter' && event.target.value !== ""){
-      this.setState({
-        lists: [...this.state.lists, {
-          name: this.getName(event.target.value),
-          id: this.state.lists.length,
-          tasks: [],
-          enteredName: event.target.value,
-        }]
-      })
-      event.target.value = ""
-    }
   }
 
   getName = (name) => {
@@ -106,14 +101,12 @@ class App extends React.Component{
           <NavBar toggleMenu={this.toggleMenu}
                   addList={this.addList}
                   setCurrentList={this.setCurrentList}
-                  {...this.state}
           ></NavBar>
             <ListDetails updateCurrentListName={this.updateCurrentListName}
                         updateListName={this.updateListName}
                         addTask={this.addTask}
                         setCurrentTask={this.setCurrentTask}
                         toggleTaskStatus={this.toggleTaskStatus}
-                        {...this.state}
             ></ListDetails>
             {this.state.isTaskDetailsOpen &&
                 <TaskDetails toggleTaskDetails={this.toggleTaskDetails}
@@ -125,4 +118,4 @@ class App extends React.Component{
     );}
 }
 
-export default App
+export default connect(mapStateToProps)(App)
